@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="/static/jquery.min.js"></script>
+
+    <script>
+        /*
+         自强学堂 学习更多IT技术
+         http://www.ziqiangxuetang.com
+         */
+
+        $.ajaxSetup({
+            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
+        });
+
+        function select_drug() {
+            var drug=document.forms[0].drug;
+            var drugs="";
+            var i;
+            for (i=0;i<drug.length;i++) {
+                if (drug[i].checked)
+                {
+                    drugs=drugs + drug[i].value + " ";
+                }
+            }
+
+            $.post('{% url "exam2014" %}', {'drugs': drugs}, function(ret){
+                $('#result').html(ret);
+            })
+        }
+    </script>
+</head>
+
+<body>
+
+
+<p>请选择两个药名：</p>
+<form>
+    {% for drug in drugs %}
+        <input type="checkbox" name="drug" value="{{ drug.id }}">{{ drug.name }}<br>
+    {% endfor %}
+    <br><input type="button" onclick="select_drug()" value="Submit"><br>
+</form>
+
+<div id="result"></div>
+
+
+</body>
+
+</html>

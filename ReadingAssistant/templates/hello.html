@@ -1,0 +1,24 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+    <script type="text/javascript" src="/static/js/time.js"></script>
+</head>
+<body onload="refreshTime()">
+    <h2>Welcome to this website</h2>
+    Visit time : {{ visit_time }} </br>
+    Now time : <div id="time"></div>
+    <img src="/static/img/doge.png" />
+    <script type="text/javascript">
+        setInterval("refreshTime()", 1000);
+        function refreshTime() {
+            var time = new Date().format("yyyy-MM-dd hh:mm:ss");
+            document.getElementById("time").innerHTML = time.toString();
+        }
+    </script>
+</body>
+</html>
