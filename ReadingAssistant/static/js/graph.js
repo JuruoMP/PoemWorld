@@ -36,9 +36,9 @@ function refresh() {
         d3.select(this).classed("draggind", false);
     }
 
-    function click(name) {
+    function click(type, name) {
         //$('.ui.modal').modal('show');
-        window.showModalDialog("eneity=" + name + "/", window,
+        window.showModalDialog("type=" + type + "&eneity=" + name + "/", window,
         "dialogHeight:" + window.innerHeight / 2 + "px;dialogWidth:" + window.innerWidth / 2 + "px;status=no;");
     }
 
@@ -132,8 +132,8 @@ function refresh() {
         .append("g")
         .attr("class", "node")
         .call(force.drag)
-        .on("click", function (d, i) {
-            click(d.name);
+        .on("click", function (d) {
+            click(d.type, d.name);
         });
 
     node.append("circle")

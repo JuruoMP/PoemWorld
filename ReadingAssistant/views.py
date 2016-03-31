@@ -39,7 +39,7 @@ def hello(request):
                               {'visit_time': visit_time})
 
 
-def entity_modal(request, entity):
+def entity_modal(request, type, entity):
     return render_to_response('modal.html',
                               {'entity': entity,
                                'image_url': 'https://github.com/favicon.ico',

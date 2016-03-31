@@ -1,50 +1,159 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-cn">
 <head>
-    <script src="/static/jquery.min.js"></script>
-
-    <script>
-        /*
-         自强学堂 学习更多IT技术
-         http://www.ziqiangxuetang.com
-         */
-
-        $.ajaxSetup({
-            data: {csrfmiddlewaretoken: '{{ csrf_token }}' },
-        });
-
-        function select_drug() {
-            var drug=document.forms[0].drug;
-            var drugs="";
-            var i;
-            for (i=0;i<drug.length;i++) {
-                if (drug[i].checked)
-                {
-                    drugs=drugs + drug[i].value + " ";
-                }
-            }
-
-            $.post('{% url "exam2014" %}', {'drugs': drugs}, function(ret){
-                $('#result').html(ret);
-            })
-        }
-    </script>
+    <!-- For semantic UI -->
+    <script src="/static/js/jquery-1.12.2.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
+    <script src="/static/semantic/dist/semantic.min.js"></script>
+    <!-- For HTML -->
+    <meta charset="UTF-8">
+    <title>机器作诗</title>
 </head>
-
 <body>
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Header</title>
+    <title>Header</title>
+</head>
+<body>
 
-<p>请选择两个药名：</p>
-<form>
-    {% for drug in drugs %}
-        <input type="checkbox" name="drug" value="{{ drug.id }}">{{ drug.name }}<br>
-    {% endfor %}
-    <br><input type="button" onclick="select_drug()" value="Submit"><br>
-</form>
+<div class="ui orange three item inverted menu">
+    <a class="active item" href="/map/">首页</a>
+    <a class="item" href="/map/">图观诗界</a>
+    <a class="item" href="/generatepoem/">自动作诗</a>
+</div>
 
-<div id="result"></div>
+</body>
+</html>
+
+
+<div class="ui centered grid">
+
+    <div class="ui form">
+
+        <div class="ui labeled input">
+            <div class="ui label">请输入内容：</div>
+            <input type="text" name="content" id="content" placeholder="一花一世界">
+        </div>
+
+        <div class="inline fields">
+            <label>字数: </label>
+            <div class="field">
+                <div class="ui labeled radio checkbox">
+                    <input type="radio" name="frequency" id="frequency" value="5" checked="checked"><label>5</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui labeled radio checkbox">
+                    <input type="radio" name="frequency" id="frequency" value="7"><label>7</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="inline fields">
+            <label>藏的位置: </label>
+            <div class="field">
+                <div class="ui labeled radio checkbox">
+                    <input type="radio" name="type" id="type" value="1" checked="checked"><label>藏头</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui labeled radio checkbox">
+                    <input type="radio" name="type" id="type" value="2"><label>藏尾</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui labeled radio checkbox">
+                    <input type="radio" name="type" id="type" value="3"><label>藏中</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui labeled radio checkbox">
+                    <input type="radio" name="type" id="type" value="4"><label>递增</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui labeled radio checkbox">
+                    <input type="radio" name="type" id="type" value="5"><label>递减</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="inline fields">
+            <label>押韵方式: </label>
+            <div class="field">
+                <div class="ui labeled radio checkbox">
+                    <input type="radio" name="yayuntype" id="yayuntype" value="1" checked="checked"><label>双句一压
+                </label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui labeled radio checkbox">
+                    <input type="radio" name="yayuntype" id="yayuntype" value="2"><label>双句押韵</label>
+                </div>
+            </div>
+            <div class="field">
+                <div class="ui labeled radio checkbox">
+                    <input type="radio" name="yayuntype" id="yayuntype" value="3"><label>一三四押</label>
+                </div>
+            </div>
+        </div>
+
+        <button class="ui primary button" onclick="submit()">生成</button>
+    </div>
+
+</div>
+
+
+    <div class="ui centered grid">
+        <div class="ui segment">
+<div class="ui centered cards">
+    <div class="ui card"><div id='commetcontentNew'><font color=red><b>花</b></font>间语笑声，<br/><font color=red><b>开</b></font>门物景澄。<br/><font color=red><b>人</b></font>传乐善名，<br/><font color=red><b>笑</b></font>尔作愁兵。<br/></div></div>
+    <div class="ui card"><div id='commetcontentNew1'><font color=red><b>花</b></font>月醉雕鞍，<br/><font color=red><b>开</b></font>户临西园。<br/><font color=red><b>人</b></font>和事不违，<br/><font color=red><b>笑</b></font>妾空罗帏。<br/></div></div>
+	<div class="ui card"> <div id='commetcontentNew2'><font color=red><b>花</b></font>边似雪回，<br/><font color=red><b>开</b></font>眉复向谁。<br/><font color=red><b>人</b></font>传乐善名，<br/><font color=red><b>笑</b></font>杀陶渊明。<br/></div></div>
+    <div class="ui card"><div id='commetcontentNew3'><font color=red><b>花</b></font>月醉雕鞍，<br/><font color=red><b>开</b></font>尊时自劝。<br/><font color=red><b>人</b></font>生尽如寄，<br/><font color=red><b>笑</b></font>捤嫔熘。<br/></div></div>
+	<div class="ui card"> <div id='commetcontentNew4'><font color=red><b>花</b></font>残菊破丛，<br/><font color=red><b>开</b></font>眼锁浮荣。<br/><font color=red><b>人</b></font>稀陇戍头，<br/><font color=red><b>笑</b></font>谢万户侯。<br/></div></div>
+	<div class="ui card"> <div id='commetcontentNew5'><font color=red><b>花</b></font>开子留树，<br/><font color=red><b>开</b></font>此河渚雾。<br/><font color=red><b>人</b></font>和事不违，<br/><font color=red><b>笑</b></font>别远山眉。<br/></div></div>
+</div>
+
+        </div>
+    </div>
 
 
 </body>
-
 </html>
+
+<script type="text/javascript">
+    function submit() {
+        var content = $("#content")[0].value;
+        if(content === '') {
+            content = $("#content")[0].placeholder;
+        }
+        var f;
+        f = $('#frequency');
+        var num;
+        for(var i=0; i< f.length; i++) {
+            if(f[i].checked) {
+                num = f[i].value;
+            }
+        }
+        f = $('#type');
+        var type;
+        for(var i=0; i< f.length; i++) {
+            if(f[i].checked) {
+                type = f[i].value;
+            }
+        }
+        f = $('#yayuntype');
+        var yayuntype;
+        for(var i=0; i< f.length; i++) {
+            if(f[i].checked) {
+                yayuntype = f[i].value;
+            }
+        }
+        self.location = '/generatepoem/string=' + content + '&num=' + num + '&type=' + type + '&yayuntype=' + yayuntype + '/';
+    }
+</script>

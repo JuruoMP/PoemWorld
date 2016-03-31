@@ -91,13 +91,13 @@
 
 </div>
 
-<div class="ui centered grid">
-    <div class="ui segment">
-        {% if generated %}
+{% if generated %}
+    <div class="ui centered grid">
+        <div class="ui segment">
             {{ generate_response | safe }}
-        {% endif %}
+        </div>
     </div>
-</div>
+{% endif %}
 
 </body>
 </html>
