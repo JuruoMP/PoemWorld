@@ -10,6 +10,10 @@ from .generate import *
 # Create your views here.
 
 
+def homePage(request):
+    return render_to_response('homepage.html')
+
+
 def map(request):
     return render_to_response("graph.html",
                               {"center_entity": "ALL",

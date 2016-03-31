@@ -8,3 +8,82 @@
     <div id="info">{{ entity_info }}</div>
 </head>
 <body>
+
+{% if entity_type == 'author' %}
+
+    {% if author_head_thumb %}
+        <img class="ui medium rounded image" src="{{ author_head_thumb }}">
+        <div class="ui divider"></div>
+    {% endif %}
+
+    <h3>{{ author_name }}</h3>
+
+    {% if author_belong %}
+        <div class="ui label">
+            朝代:
+            <div class="detail">{{ author_belong }}</div>
+        </div>
+    {% endif %}
+
+    {% if author_birth or author_death %}
+        <div class="ui segment">
+            {{ author_birth }} - {{ author_death }}
+        </div>
+    {% endif %}
+
+    {% if author_desc %}
+        <div class="ui segment">{{ author_desc }}</div>
+    {% endif %}
+
+{% endif %}
+
+{% if entity_type == 'poem' %}
+
+    <div class="ui center aligned segment">
+        <h3>{{ poem_name }}</h3>
+        {{ poem_content }}
+    </div>
+
+    {% if poem_year %}
+        <a class="ui tag label">{{ poem_year }}</a>
+    {% endif %}
+
+    {% if poem_kind %}
+        <a class="ui tag label">{{ poem_kind }}</a>
+    {% endif %}
+
+    {% if poem_pinyin %}
+        <div class="ui divider"></div>
+        <div class="ui segment">{{ poem_pinyin }}</div>
+    {% endif %}
+
+    {% if poem_analysis %}
+        <div class="ui divider"></div>
+        <div class="ui segment">{{ poem_analysis }}</div>
+    {% endif %}
+
+{% endif %}
+
+{% if entity_type == 'image' %}
+
+    <h3>{{ image_name }}</h3>
+
+    {% if image_emotion %}
+        <div class="ui divider"></div>
+        <div class="ui segment">
+            表达情感：{{ image_emotion }}
+        </div>
+    {% endif %}
+
+    {% if images %}
+        <div class="ui segment">
+        表达相同情感的意象：
+        {% for image in images %}
+            <li>{{ image }}</li>
+        {% endfor %}
+        </div>
+    {% endif %}
+
+{% endif %}
+
+</body>

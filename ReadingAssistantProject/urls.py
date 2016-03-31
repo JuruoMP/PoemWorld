@@ -27,5 +27,5 @@ urlpatterns = [
     url(r'^hello/$', views.hello),
     url(r'^demo/$', views.demo),
     url(r'^test/$', views.test),
-    url(r'^', views.map),
+    url(r'^', views.homePage),
 ]

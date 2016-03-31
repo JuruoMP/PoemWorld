@@ -2,7 +2,7 @@
 json = {
     "nodes": [
         {
-            "name": "Myriel",
+            "name": "反正不是我",
             "icon": "https://github.com/favicon.ico",
             "group": 1
         },
