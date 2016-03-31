@@ -6,7 +6,7 @@ from .webcookie import *
 import time
 from .datas import *
 from .generate import *
-from .search.search imort *
+from ReadingAssistant.search.search import *
 
 
 # Create your views here.
@@ -22,15 +22,17 @@ def searchCondition(request, condition):
     cNode = search(condition)
     if cNode is None or not cNode.executeQuery():
         #How to handle this branch?
-        pass
+        return render_to_response("graph.html",
+                              {"center_entity": "None",})
     graphMaker = GraphMaker()
     cNode.addNode2Graph(graphMaker)
-    AdjNodes = extendRels(graphMaker)
+    AdjNodes = cNode.extendRels(graphMaker)
     for aNode in AdjNodes:
         aNode.extendRels(graphMaker)
+    print graphMaker.toJson()
     return render_to_response("graph.html",
                               {"center_entity": cNode.getContent(),
-                               "json": graphMaker.toJson()})
+                               "json": json})
 
 
 def hello(request):

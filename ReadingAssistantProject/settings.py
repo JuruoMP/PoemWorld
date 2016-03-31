@@ -28,6 +28,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+FILE_CHARSET = 'utf-8'
+DEFAULT_CHARSET = 'utf-8'
 
 # Application definition
 
@@ -80,10 +82,10 @@ WSGI_APPLICATION = 'ReadingAssistantProject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'rd_db',
-        'USER': 'root',
-        'PASSWORD' : 'root',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'rd_db.sqlite3'),
+        'USER': '',
+        'PASSWORD' : '',
         'HOST' : '',
         'PORT' : '',
     }

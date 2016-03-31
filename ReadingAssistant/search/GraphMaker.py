@@ -1,4 +1,4 @@
-
+# -*- coding:utf-8 -*-
 class GraphMaker():
 	def __init__(self):
 		self.count = 0
@@ -10,18 +10,17 @@ class GraphMaker():
 	def addNode(self, name):
 		if self.nodeDict.get(name) is None:
 			newNode = {}
-			newNode['name'] = name
+			newNode['name'] = name.encode('gbk')
 			self.nodeList.append(newNode)
 			self.nodeDict[name] = self.count
 			self.count = self.count + 1
 		return self.nodeDict[name]
 
-	def addLink(srcNodeId, dstNodeName, typeName):
-		dstNodeId = self.addNode(dstNodeName)
+	def addLink(self, srcNodeId, dstNodeId, typeName):
 		newLink = {}
 		newLink['source'] = srcNodeId
 		newLink['target'] = dstNodeId
-		newLink['value'] = typeName
+		newLink['value'] = typeName.encode('utf-8')
 		self.linkList.append(newLink)
 
 	def toJson(self):

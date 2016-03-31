@@ -4,7 +4,7 @@ from .CentralEnt import *
 
 def getCentralNode(condition):
 	node = None
-	words = jieba.possge.cut(condition)
+	words = jieba.posseg.cut(condition)
 	for word, tag in words:
 		if tag == 'nr' or tag == 'nz':
 			node = AuthorEnt(word)
