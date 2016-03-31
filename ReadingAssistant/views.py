@@ -6,6 +6,8 @@ from .webcookie import *
 import time
 from .datas import *
 from .generate import *
+from .search.search imort *
+
 
 # Create your views here.
 
@@ -17,9 +19,18 @@ def map(request):
 
 
 def searchCondition(request, condition):
+    cNode = search(condition)
+    if cNode is None or not cNode.executeQuery():
+        #How to handle this branch?
+        pass
+    graphMaker = GraphMaker()
+    cNode.addNode2Graph(graphMaker)
+    AdjNodes = extendRels(graphMaker)
+    for aNode in AdjNodes:
+        aNode.extendRels(graphMaker)
     return render_to_response("graph.html",
-                              {"center_entity": condition,
-                               "json": json})
+                              {"center_entity": cNode.getContent(),
+                               "json": graphMaker.toJson()})
 
 
 def hello(request):
@@ -38,7 +49,6 @@ def entity_modal(request, entity):
 
 def generate_poem_empty(request):
     return render_to_response('gen_poem.html', {})
-
 
 def generate_poem(request, string, num, type, yayuntype):
     content = getPoem(string, num, type, yayuntype)
