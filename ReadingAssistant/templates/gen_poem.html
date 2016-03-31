@@ -17,21 +17,22 @@
 <div class="ui centered grid">
 
     <div class="ui form">
+
         <div class="ui labeled input">
             <div class="ui label">请输入内容：</div>
-            <input type="text" name="content" placeholder="一花一世界">
+            <input type="text" name="content" id="content" placeholder="一花一世界">
         </div>
 
         <div class="inline fields">
             <label>字数: </label>
             <div class="field">
                 <div class="ui labeled radio checkbox">
-                    <input type="radio" name="frequency" value="5" checked="checked"><label>5</label>
+                    <input type="radio" name="frequency" id="frequency" value="5" checked="checked"><label>5</label>
                 </div>
             </div>
             <div class="field">
                 <div class="ui labeled radio checkbox">
-                    <input type="radio" name="frequency" value="7"><label>7</label>
+                    <input type="radio" name="frequency" id="frequency" value="7"><label>7</label>
                 </div>
             </div>
         </div>
@@ -40,27 +41,27 @@
             <label>藏的位置: </label>
             <div class="field">
                 <div class="ui labeled radio checkbox">
-                    <input type="radio" name="type" value="1" checked="checked"><label>藏头</label>
+                    <input type="radio" name="type" id="type" value="1" checked="checked"><label>藏头</label>
                 </div>
             </div>
             <div class="field">
                 <div class="ui labeled radio checkbox">
-                    <input type="radio" name="type" value="2"><label>藏尾</label>
+                    <input type="radio" name="type" id="type" value="2"><label>藏尾</label>
                 </div>
             </div>
             <div class="field">
                 <div class="ui labeled radio checkbox">
-                    <input type="radio" name="type" value="3"><label>藏中</label>
+                    <input type="radio" name="type" id="type" value="3"><label>藏中</label>
                 </div>
             </div>
             <div class="field">
                 <div class="ui labeled radio checkbox">
-                    <input type="radio" name="type" value="4"><label>递增</label>
+                    <input type="radio" name="type" id="type" value="4"><label>递增</label>
                 </div>
             </div>
             <div class="field">
                 <div class="ui labeled radio checkbox">
-                    <input type="radio" name="type" value="5"><label>递减</label>
+                    <input type="radio" name="type" id="type" value="5"><label>递减</label>
                 </div>
             </div>
         </div>
@@ -69,33 +70,66 @@
             <label>押韵方式: </label>
             <div class="field">
                 <div class="ui labeled radio checkbox">
-                    <input type="radio" name="yayuntype" value="1" checked="checked"><label>双句一压
+                    <input type="radio" name="yayuntype" id="yayuntype" value="1" checked="checked"><label>双句一压
                 </label>
                 </div>
             </div>
             <div class="field">
                 <div class="ui labeled radio checkbox">
-                    <input type="radio" name="yayuntype" value="2"><label>双句押韵</label>
+                    <input type="radio" name="yayuntype" id="yayuntype" value="2"><label>双句押韵</label>
                 </div>
             </div>
             <div class="field">
                 <div class="ui labeled radio checkbox">
-                    <input type="radio" name="yayuntype" value="3"><label>一三四押</label>
+                    <input type="radio" name="yayuntype" id="yayuntype" value="3"><label>一三四押</label>
                 </div>
             </div>
         </div>
 
-        <button class="ui primary button" onclick="sumbmit()">生成</button>
+        <button class="ui primary button" onclick="submit()">生成</button>
     </div>
 
 </div>
 
+<div class="ui centered grid">
+    <div class="ui segment">
+        {% if generated %}
+            {{ generate_response | safe }}
+        {% endif %}
+    </div>
+</div>
 
 </body>
 </html>
 
 <script type="text/javascript">
     function submit() {
-        //TODO: add modal layer
+        var content = $("#content")[0].value;
+        if(content === '') {
+            content = $("#content")[0].placeholder;
+        }
+        var f;
+        f = $('#frequency');
+        var num;
+        for(var i=0; i< f.length; i++) {
+            if(f[i].checked) {
+                num = f[i].value;
+            }
+        }
+        f = $('#type');
+        var type;
+        for(var i=0; i< f.length; i++) {
+            if(f[i].checked) {
+                type = f[i].value;
+            }
+        }
+        f = $('#yayuntype');
+        var yayuntype;
+        for(var i=0; i< f.length; i++) {
+            if(f[i].checked) {
+                yayuntype = f[i].value;
+            }
+        }
+        self.location = '/generatepoem/string=' + content + '&num=' + num + '&type=' + type + '&yayuntype=' + yayuntype + '/';
     }
 </script>

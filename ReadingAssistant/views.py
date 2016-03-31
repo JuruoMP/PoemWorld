@@ -36,18 +36,15 @@ def entity_modal(request, entity):
                                'entity_info': 'ENTITY_INFO'})
 
 
-def generate_poem(request):
-    getPoem()
-    cookie = getCookie('http://cts.388g.com/')
-    print(cookie)
-    #pgv_pvi = cookie['pgv_pvi']
-    pgv_pvi = '9436215296'
-    #pgv_si = cookie['pgv_si']
-    pgv_si = 's3932924928'
-    response = render(request, 'gen_poem.html')
-    response.set_cookie('pgv_pvi', pgv_pvi)
-    response.set_cookie('pgv_si', pgv_si)
-    return response
+def generate_poem_empty(request):
+    return render_to_response('gen_poem.html', {})
+
+
+def generate_poem(request, string, num, type, yayuntype):
+    content = getPoem(string, num, type, yayuntype)
+    return render_to_response('gen_poem.html',
+                              {'generated': 'true',
+                               'generate_response': content})
 
 
 def demo(request):
