@@ -19,6 +19,8 @@ def getPoem(string, num, type, yayuntype):
     url = 'http://cts.388g.com/fasong.php?w=' + str_utf8 + '&num=' + num + '&type=' + type + '&yayuntype=' + yayuntype
     webpage = urllib.request.urlopen(url)
     content = webpage.read().decode('gbk')
+    content.replace('<ul>', '<div class="ui centered cards">').replace('</ul>', '</div>')
+    content.replace('<li>', '<div class="ui card">').replace('</li>', '</div>')
     #print(content)
     return content
 
