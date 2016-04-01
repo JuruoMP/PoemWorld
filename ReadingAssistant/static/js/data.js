@@ -40,7 +40,7 @@
 
 function searchUrl() {
     var condition = $("#inputCondition").val();
-    window.location.replace("map/search/condition=" + condition);
+    self.location = "/map/search/condition=" + condition;
 }
 
 function generateUrl() {

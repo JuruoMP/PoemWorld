@@ -74,7 +74,7 @@ function refresh() {
     var force = d3.layout.force()
         .gravity(0.05)
         .linkDistance(150)
-        .charge(-300)
+        .charge(-4096)
         .size([width, height]);
 
     var zoom = d3.behavior.zoom()

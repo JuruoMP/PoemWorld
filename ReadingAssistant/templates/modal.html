@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <!-- For semantic UI -->
+    <script src="/static/js/jquery-1.12.2.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
+    <script src="/static/semantic/dist/semantic.min.js"></script>
+    <!-- For HTML -->
     <script type="text/javascript" src="/static/js/modal.js"></script>
     <meta charset="UTF-8">
-    <img src="{{ image_url }}"/>
-    <h2>{{ entity_name }}</h2>
-    <div id="info">{{ entity_info }}</div>
 </head>
 <body>
 
@@ -45,7 +47,7 @@
     </div>
 
     {% if poem_year %}
-        <a class="ui tag label">{{ poem_year }}</a>
+        <a class="ui tag label">创作时间：{{ poem_year }}年</a>
     {% endif %}
 
     {% if poem_kind %}
