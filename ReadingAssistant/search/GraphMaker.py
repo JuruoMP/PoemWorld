@@ -21,7 +21,7 @@ class GraphMaker():
 		key = str(entType) + '_' + str(priKey)
 		if self.nodeDict.get(key) is None:
 			newNode = {}
-			newNode['name'] = entName
+			newNode['name'] = entName.encode('utf-8')
 			newNode['type'] = entType
 			self.nodeList.append(newNode)
 			self.nodeDict[key] = self.count
@@ -51,7 +51,7 @@ class GraphMaker():
 		newLink = {}
 		newLink['source'] = srcNodeId
 		newLink['target'] = dstNodeId
-		newLink['value'] = typeName
+		newLink['value'] = typeName.encode('utf-8')
 		self.linkList.append(newLink)
 
 	def toJson(self):
