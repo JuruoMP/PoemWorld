@@ -4,7 +4,7 @@ from django.shortcuts import *
 from django.http import HttpResponse
 from .webcookie import *
 import time
-from .datas import *
+#from .datas import *
 from .generate import *
 from ReadingAssistant.search.search import *
 
@@ -16,13 +16,19 @@ def homePage(request):
 
 
 def map(request):
-    return render_to_response("graph.html",
-                              {"center_entity": "ALL",
-                               "json": json})
+	graphMaker = getWholeGraph()
+	return render_to_response("graph.html",
+								{"center_entity": "ALL",
+								"json": graphMaker.toJson()})
 
 
 def searchCondition(request, condition):
-    cNode = search(condition)
+    cNode = search4CNode(condition)
+    if len(condition) == 0:
+    	graphMaker = getWholeGraph()
+    	return render_to_response("graph.html",
+    							{"center_entity": "ALL",
+    							"json": graphMaker.toJson()})
     if cNode is None or not cNode.executeQuery():
         #How to handle this branch?
         return render_to_response("graph.html",
