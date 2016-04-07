@@ -12,7 +12,16 @@ class CentralEnt:
 		return self.content
 
 	def addNode2Graph(self, graphMaker):
-		self.nodeId = graphMaker.addNode(self.content, self.record.entity_type)
+		nodeType = self.record.entity_type
+		if nodeType == "author":
+			nodeId = self.record.author_id
+		elif nodeType == "poem":
+			nodeId = self.record.poem_id
+		elif nodeType == "image":
+			nodeId = self.record.image_id
+		else:
+			nodeId = self.record.emotion_desc
+		self.nodeId = graphMaker.addNode(nodeId, self.content, nodeType)
 
 	#This function will return a QuerySet of candidate central entities
 	def executeQuery(self):
@@ -42,7 +51,7 @@ class AuthorEnt(CentralEnt):
 			poem = rel.poem
 			node = PoemEnt(poem.poem_name, poem)
 			node.addNode2Graph(graphMaker)
-			dstNodeId = graphMaker.addNode(poem.poem_name, poem.entity_type)
+			dstNodeId = graphMaker.addNode(poem.poem_id, poem.poem_name, poem.entity_type)
 			newNodes.append(node)
 			graphMaker.addLink(self.nodeId, dstNodeId, u"撰写")
 		return newNodes
@@ -67,7 +76,7 @@ class PoemEnt(CentralEnt):
 			author = rel.author
 			node = AuthorEnt(author.author_name, author)
 			node.addNode2Graph(graphMaker)
-			dstNodeId = graphMaker.addNode(author.author_name, author.entity_type)
+			dstNodeId = graphMaker.addNode(author.author_id, author.author_name, author.entity_type)
 			newNodes.append(node)
 			graphMaker.addLink(self.nodeId, dstNodeId, u"撰写")
 
@@ -76,7 +85,7 @@ class PoemEnt(CentralEnt):
 			image = rel.image
 			node = ImageEnt(image.image_name, image)
 			node.addNode2Graph(graphMaker)
-			dstNodeId = graphMaker.addNode(image.image_name, image.entity_type)
+			dstNodeId = graphMaker.addNode(image.image_id, image.image_name, image.entity_type)
 			newNodes.append(node)
 			graphMaker.addLink(self.nodeId, dstNodeId, u"使用意象")
 		return newNodes
@@ -100,7 +109,7 @@ class ImageEnt(CentralEnt):
 			poem = rel.poem
 			node = PoemEnt(poem.poem_name, poem)
 			node.addNode2Graph(graphMaker)
-			dstNodeId = graphMaker.addNode(poem.poem_name, poem.entity_type)
+			dstNodeId = graphMaker.addNode(poem.poem_id, poem.poem_name, poem.entity_type)
 			newNodes.append(node)
 			graphMaker.addLink(self.nodeId, dstNodeId, u"相关诗歌")
 				
@@ -109,7 +118,7 @@ class ImageEnt(CentralEnt):
 			emotion = rel.emotion
 			node = EmotionEnt(emotion.emotion_name, emotion)
 			node.addNode2Graph(graphMaker)
-			dstNodeId = graphMaker.addNode(emotion.emotion_desc, emotion.entity_type)
+			dstNodeId = graphMaker.addNode(emotion.emotion_id, emotion.emotion_desc, emotion.entity_type)
 			newNodes.append(node)
 			graphMaker.addLink(self.nodeId, dstNodeId, u"情感倾向")
 		return newNodes

@@ -1,9 +1,10 @@
 import jieba.posseg
 from ReadingAssistant.models import *
 from .CentralEnt import *
+from .GraphMaker import *
 
 
-def getCentralNode(condition):
+def getCentralEnt(condition):
     node = None
     words = jieba.posseg.cut(condition)
     for word, tag in words:
@@ -25,10 +26,10 @@ def exactSearch(condition):
         return None
     return PoemEnt(condition)
 
-
-def search(condition):
+#This function will find the central node(a CentralEnt object) in the graph
+def search4CNode(condition):
     node = exactSearch(condition)
     if node is not None:
         return node
-    node = getCentralNode(condition)
+    node = getCentralEnt(condition)
     return node

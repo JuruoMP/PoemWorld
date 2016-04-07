@@ -16,9 +16,37 @@ def homePage(request):
 
 
 def map(request):
-    return render_to_response("graph.html",
-                              {"center_entity": "ALL",
-                               "json": json})
+	graphMaker = GraphMaker()
+	aRecords = Author.objects.all()
+	graphMaker.addNodeSet(aRecords)
+	pRecords = Poem.objects.all()
+	graphMaker.addNodeSet(pRecords)
+	iRecords = Image.objects.all()
+	graphMaker.addNodeSet(iRecords)
+	eRecords = Emotion.objects.all()
+	graphMaker.addNodeSet(eRecords)
+
+	a_pLinks = Author_Poem.objects.all()
+	for link in a_pLinks:
+		aid = graphMaker.getNodeIndex(link.author_id, "author")
+		pid = graphMaker.getNodeIndex(link.poem_id, "poem")
+		graphMaker.addLink(aid, pid, u"撰写")
+
+	p_iLinks = Poem_Image.objects.all()
+	for link in p_iLinks:
+		pid = graphMaker.getNodeIndex(link.poem_id, "poem")
+		iid = graphMaker.getNodeIndex(link.image_id, "image")
+		graphMaker.addLink(pid, iid, u"使用意象")
+
+	i_eLinks = Image_Emotion.objects.all()
+	for link in i_eLinks:
+		iid = graphMaker.getNodeIndex(link.image_id, "image")
+		eid = graphMaker.getNodeIndex(link.emotion_id, "emotion")
+		graphMaker.addLink(iid, eid, u"情感倾向")
+	print graphMaker.toJson()
+	return render_to_response("graph.html",
+								{"center_entity": "ALL",
+								"json": graphMaker.toJson()})
 
 
 def searchCondition(request, condition):
