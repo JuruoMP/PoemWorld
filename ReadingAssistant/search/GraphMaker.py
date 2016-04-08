@@ -21,6 +21,7 @@ class GraphMaker():
         key = str(entType) + '_' + str(priKey)
         if self.nodeDict.get(key) is None:
             newNode = {}
+            newNode['id'] = priKey
             newNode['name'] = entName#.encode('utf-8')
             newNode['type'] = entType
             self.nodeList.append(newNode)
@@ -42,8 +43,7 @@ class GraphMaker():
                 nodeId = record.image_id
                 content = record.image_name
             else:
-                nodeId = record.emotion_id
-                content = record.emotion_desc
+                pass
 
             self.addNode(nodeId, content, nodeType)
 
