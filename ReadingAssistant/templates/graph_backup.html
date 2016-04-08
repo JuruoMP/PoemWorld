@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <!--link rel="stylesheet" type="/static/css" href="style.css" /-->
+    <title>{{ center_entity }} 知识图谱</title>
+    <script src="/static/js/d3.v3.min.js" charset="utf-8"></script>
+    <script src="/static/js/jquery-1.12.2.min.js" charset="utf-8"></script>
+    <link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
+    <script src="/static/semantic/dist/semantic.min.js"></script>
+</head>
+<body onload="refresh()">
+
+{% include "header.html" %}
+{% include "search.html" %}
+
+<div id="map"></div>
+
+<script type="text/javascript">
+    json = {{ json | safe }};
+</script>
+
+<script src="/static/js/modal.js" charset="utf-8"></script>
+<script src="/static/js/data.js" charset="utf-8"></script>
+<script src="/static/js/graph.js" charset="utf-8"></script>
+
+</body>
+</html>

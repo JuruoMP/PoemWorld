@@ -1,7 +1,6 @@
 /**
- * Created by LiYuntao on 2016/4/7.
+ * Created by LiYuntao on 2016/3/19.
  */
-
 
 function refresh() {
 
@@ -40,7 +39,7 @@ function refresh() {
     function click(type, name) {
         //$('.ui.modal').modal('show');
         window.showModalDialog("type=" + type + "&eneity=" + name + "/", window,
-            "dialogHeight:" + window.innerHeight / 2 + "px;dialogWidth:" + window.innerWidth / 2 + "px;status=no;");
+        "dialogHeight:" + window.innerHeight / 2 + "px;dialogWidth:" + window.innerWidth / 2 + "px;status=no;");
     }
 
     var margin = {top: -5, right: -5, bottom: -5, left: -5};
@@ -247,103 +246,5 @@ function refresh() {
         linkedByIndex[d.source + "," + d.target] = 1;
     });
 
-    //d3.select('rect#no-drag').on('mousedown.drag', null);
+//d3.select('rect#no-drag').on('mousedown.drag', null);
 }
-
-/*
-
- function refresh() {
- myChart.showLoading();
- $.get('data/asset/data/les-miserables.gexf', function (xml) {
- myChart.hideLoading();
-
- var graph = echarts.dataTool.gexf.parse(xml);
- var categories = [];
- for (var i = 0; i < 9; i++) {
- categories[i] = {
- name: '类目' + i
- };
- }
- graph.nodes.forEach(function (node) {
- node.itemStyle = null;
- node.value = node.symbolSize;
- node.label = {
- normal: {
- show: node.symbolSize > 30
- }
- };
- node.category = node.attributes.modularity_class;
- });
- option = {
- title: {
- text: 'Les Miserables',
- subtext: 'Default layout',
- top: 'bottom',
- left: 'right'
- },
- tooltip: {},
- legend: [{
- // selectedMode: 'single',
- data: categories.map(function (a) {
- return a.name;
- })
- }],
- animationDuration: 1500,
- animationEasingUpdate: 'quinticInOut',
- series : [
- {
- name: 'Les Miserables',
- type: 'graph',
- layout: 'none',
- data: graph.nodes,
- links: graph.links,
- categories: categories,
- roam: true,
- label: {
- normal: {
- position: 'right',
- formatter: '{b}'
- }
- },
- lineStyle: {
- normal: {
- curveness: 0.3
- }
- }
- }
- ]
- };
-
- myChart.setOption(option);
- }, 'xml');
- }
-
- function rrrefresh() {
- // 基于准备好的dom，初始化echarts实例
- var myChart = echarts.init(document.getElementById('map'));
-
- // 指定图表的配置项和数据
- var option = {
- title: {
- text: 'ECharts 入门示例'
- },
- tooltip: {},
- legend: {
- data: ['销量']
- },
- xAxis: {
- data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
- },
- yAxis: {},
- series: [{
- name: '销量',
- type: 'bar',
- data: [5, 20, 36, 10, 10, 20]
- }]
- };
-
- // 使用刚指定的配置项和数据显示图表。
- myChart.setOption(option);
- }
-
- */

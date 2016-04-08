@@ -6,7 +6,7 @@
       <env name="PYTHONUNBUFFERED" value="1" />
       <env name="DJANGO_SETTINGS_MODULE" value="ReadingAssistantProject.settings" />
     </envs>
-    <option name="SDK_HOME" value="C:\Users\li-yu\AppData\Local\Programs\Python\Python35\python.exe" />
+    <option name="SDK_HOME" value="/usr/bin/python3.4" />
     <option name="WORKING_DIRECTORY" value="" />
     <option name="IS_MODULE_SDK" value="false" />
     <option name="ADD_CONTENT_ROOTS" value="true" />

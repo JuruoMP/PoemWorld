@@ -16,23 +16,23 @@ def homePage(request):
 
 
 def map(request):
-	graphMaker = getWholeGraph()
-	return render_to_response("graph.html",
-								{"center_entity": "ALL",
-								"json": graphMaker.toJson()})
+    graphMaker = getWholeGraph()
+    return render_to_response("graph.html",
+                              {"center_entity": "ALL",
+                               "json": graphMaker.toJson()})
 
 
 def searchCondition(request, condition):
     cNode = search4CNode(condition)
     if len(condition) == 0:
-    	graphMaker = getWholeGraph()
-    	return render_to_response("graph.html",
-    							{"center_entity": "ALL",
-    							"json": graphMaker.toJson()})
+        graphMaker = getWholeGraph()
+        return render_to_response("graph.html",
+                                  {"center_entity": "ALL",
+                                   "json": graphMaker.toJson()})
     if cNode is None or not cNode.executeQuery():
         #How to handle this branch?
         return render_to_response("graph.html",
-                              {"center_entity": "None",})
+                                  {"center_entity": "None", })
     graphMaker = GraphMaker()
     cNode.addNode2Graph(graphMaker)
     AdjNodes = cNode.extendRels(graphMaker)
