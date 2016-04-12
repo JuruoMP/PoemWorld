@@ -20,7 +20,7 @@ from ReadingAssistant import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^map/$', views.map),
-    url(r'^map/type=(.*)&eneity=(.*)/$', views.entity_modal),
+    url(r'^map/type=(.*)&entid=(.*)/$', views.entity_modal),
     url(r'^map/search/type=(.*)&entid=(.*)/$', views.entity_modal),
     url(r'^map/search/condition=(.*)', views.searchCondition),
     url(r'^generatepoem/$', views.generate_poem_empty),

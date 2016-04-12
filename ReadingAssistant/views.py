@@ -54,7 +54,7 @@ def entity_modal(request, type, entId):
     renderDict = {}
     try:
         eid = int(entId)
-    except Exception, e:
+    except Exception:
         pass
     else:
         if type == 'author':

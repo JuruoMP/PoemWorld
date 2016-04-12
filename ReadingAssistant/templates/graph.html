@@ -8,16 +8,17 @@
     <script src="/static/js/jquery-1.12.2.min.js" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
     <script src="/static/semantic/dist/semantic.min.js"></script>
+    <script src="/static/echarts/dist/echarts.js"></script>
 </head>
 <body onload="refresh()">
 
 {% include "header.html" %}
 {% include "search.html" %}
 
-<div id="map"></div>
+<div id="map" style="width: 600px;height:400px;"></div>
 
 <script type="text/javascript">
-    json = {{ json | safe }};
+    jsonInfo = {{ json | safe }};
 </script>
 
 <script src="/static/js/modal.js" charset="utf-8"></script>
@@ -26,3 +27,16 @@
 
 </body>
 </html>
+
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/jquery/jquery.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/bootstrap/js/bootstrap.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/lodash.js"></script>
+<script id="echarts-js" type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts-all-3.js"></script>
+<script id="echarts-js" type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script id="echarts-js" type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script id="echarts-js" type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.js"></script>
+<script id="echarts-js" type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/ace/src/ace.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/ace/src/ext-language_tools.js"></script>
+<!--script type="text/javascript" src="http://echarts.baidu.com/gallery/javascripts/editor.js"></script-->
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/javascripts/hm.js"></script>

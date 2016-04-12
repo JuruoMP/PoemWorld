@@ -36,9 +36,9 @@ function refresh() {
         d3.select(this).classed("draggind", false);
     }
 
-    function click(type, name) {
+    function click(type, id) {
         //$('.ui.modal').modal('show');
-        window.showModalDialog("type=" + type + "&eneity=" + name + "/", window,
+        window.showModalDialog("type=" + type + "&entid=" + id + "/", window,
         "dialogHeight:" + window.innerHeight / 2 + "px;dialogWidth:" + window.innerWidth / 2 + "px;status=no;");
     }
 
@@ -74,7 +74,7 @@ function refresh() {
     var force = d3.layout.force()
         .gravity(0.05)
         .linkDistance(150)
-        .charge(-4096)
+        .charge(-2048)
         .size([width, height]);
 
     var zoom = d3.behavior.zoom()
@@ -133,14 +133,14 @@ function refresh() {
         .attr("class", "node")
         .call(force.drag)
         .on("click", function (d) {
-            click(d.type, d.name);
+            click(d.type, d.id);
         });
 
     node.append("circle")
         .attr("r", 16)
         .style("fill", function (d, i) {
-            return colors(i);
-            console.log(color);
+            return colors(d.type);
+            //console.log(color);
         });
     //.attr("cx", function(d) { return d.x; })
     //.attr("cy", function(d) { return d.y; }
