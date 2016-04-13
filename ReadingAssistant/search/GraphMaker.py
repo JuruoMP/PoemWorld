@@ -24,6 +24,8 @@ class GraphMaker():
             newNode['id'] = priKey
             newNode['name'] = entName#.encode('utf-8')
             newNode['type'] = entType
+            newNode['size'] = 16
+            newNode['thumb'] = '/static/img/thumb/0.png'
             self.nodeList.append(newNode)
             self.nodeDict[key] = self.count
             self.count = self.count + 1
