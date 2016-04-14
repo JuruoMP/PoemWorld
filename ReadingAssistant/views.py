@@ -30,7 +30,6 @@ def searchCondition(request, condition):
                                   {"center_entity": "ALL",
                                    "json": graphMaker.toJson()})
     if cNode is None or not cNode.executeQuery():
-        #How to handle this branch?
         return render_to_response("graph.html",
                                   {"center_entity": "None", })
     graphMaker = GraphMaker()
