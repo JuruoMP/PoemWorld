@@ -14,7 +14,12 @@
 {% include "header.html" %}
 {% include "search.html" %}
 
-<div id="map"></div>
+<div class="ui row">
+    <div class="ui vertical inverted  menu", id="detail"></div>
+</div>
+<div class="ui row">
+    <div id="map" style="width:100%; height:100%"></div>
+</div>
 
 <script type="text/javascript">
     json = {{ json | safe }};
