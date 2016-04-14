@@ -26,6 +26,8 @@ class GraphMaker():
             newNode['type'] = entType
             newNode['size'] = 16
             if thumbPath is not None:
+                circledThumbPath = thumbPath.split('.')
+                thumbPath = circledThumbPath[0] + '_circle.' + circledThumbPath[1]
                 newNode['thumb'] = thumbPath
             self.nodeList.append(newNode)
             self.nodeDict[key] = self.count
