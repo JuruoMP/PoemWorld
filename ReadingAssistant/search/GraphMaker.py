@@ -17,7 +17,7 @@ class GraphMaker():
             return -1
 
 
-    def addNode(self, priKey, entName, entType):
+    def addNode(self, priKey, entName, entType, thumbPath=None):
         key = str(entType) + '_' + str(priKey)
         if self.nodeDict.get(key) is None:
             newNode = {}
@@ -25,7 +25,8 @@ class GraphMaker():
             newNode['name'] = entName#.encode('utf-8')
             newNode['type'] = entType
             newNode['size'] = 16
-            newNode['thumb'] = '/static/img/thumb/0.png'
+            if thumbPath is not None:
+                newNode['thumb'] = thumbPath
             self.nodeList.append(newNode)
             self.nodeDict[key] = self.count
             self.count = self.count + 1
@@ -34,10 +35,14 @@ class GraphMaker():
     def addNodeSet(self, qset):
         for record in qset:
             nodeType = record.entity_type
+            thumbPath = None
 
             if nodeType == "author":
                 nodeId = record.author_id
                 content = record.author_name
+                thumb_temp = record.author_head_thumb
+                if len(thumb_temp) != 0:
+                    thumbPath = thumb_temp
             elif nodeType == "poem":
                 nodeId = record.poem_id
                 content = record.poem_name
@@ -47,7 +52,7 @@ class GraphMaker():
             else:
                 pass
 
-            self.addNode(nodeId, content, nodeType)
+            self.addNode(nodeId, content, nodeType, thumbPath)
 
     def addLink(self, srcNodeId, dstNodeId, typeName):
         newLink = {}
