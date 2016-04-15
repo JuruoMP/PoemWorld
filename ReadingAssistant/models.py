@@ -74,3 +74,11 @@ class Image_Emotion(models.Model):
     
     class Meta:
         db_table = 'image_emotion_table'
+
+class AuthorRelation(models.Model):
+    author1 = models.ForeignKey(Author, related_name='author1')
+    author2 = models.ForeignKey(Author, related_name='author2')
+    relation_type = models.CharField(max_length=16, default="author_author")
+    
+    class Meta:
+        db_table = 'author_relation_table'

@@ -51,8 +51,15 @@ class AuthorEnt(CentralEnt):
 
     def extendRels(self, graphMaker):
         newNodes = []
-        relset = Author_Poem.objects.filter(author=self.record.author_id)
-        for rel in relset:
+        relset1 = Author_Poem.objects.filter(author=self.record.author_id)
+        for rel in relset1:
+            poem = rel.poem
+            node = PoemEnt(poem.poem_name, poem)
+            dstNodeId = node.addNode2Graph(graphMaker)
+            newNodes.append(node)
+            graphMaker.addLink(self.nodeId, dstNodeId, u"撰写")
+        relset2 = Author_Poem.objects.filter(author=self.record.author_id)
+        for rel in relset2:
             poem = rel.poem
             node = PoemEnt(poem.poem_name, poem)
             dstNodeId = node.addNode2Graph(graphMaker)
