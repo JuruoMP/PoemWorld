@@ -73,6 +73,12 @@ def getWholeGraph():
         iid = graphMaker.getNodeIndex(link.image_id, "image")
         graphMaker.addLink(pid, iid, u"使用意象")
 
+    a_aLinks = AuthorRelation.objects.all()
+    for link in a_aLinks:
+        aid1 = graphMaker.getNodeIndex(link.author1_id, "author")
+        aid2 = graphMaker.getNodeIndex(link.author2_id, "author")
+        graphMaker.addLink(aid1, aid2, link.rel_desc)
+
     '''
     i_eLinks = Image_Emotion.objects.all()
     for link in i_eLinks:

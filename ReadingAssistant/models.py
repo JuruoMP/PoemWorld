@@ -78,6 +78,7 @@ class Image_Emotion(models.Model):
 class AuthorRelation(models.Model):
     author1 = models.ForeignKey(Author, related_name='author1')
     author2 = models.ForeignKey(Author, related_name='author2')
+    rel_desc = models.TextField(default="朋友")
     relation_type = models.CharField(max_length=16, default="author_author")
     
     class Meta:

@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 from ReadingAssistant.models import *
 from .GraphMaker import *
+from django.db.models import Q
 
 class CentralEnt:
     def __init__(self, content, record):
@@ -58,13 +59,22 @@ class AuthorEnt(CentralEnt):
             dstNodeId = node.addNode2Graph(graphMaker)
             newNodes.append(node)
             graphMaker.addLink(self.nodeId, dstNodeId, u"撰写")
-        relset2 = Author_Poem.objects.filter(author=self.record.author_id)
+        relset2 = AuthorRelation.objects.filter(Q(author1=self.record.author_id) | Q(author2=self.record.author_id))
         for rel in relset2:
-            poem = rel.poem
-            node = PoemEnt(poem.poem_name, poem)
-            dstNodeId = node.addNode2Graph(graphMaker)
-            newNodes.append(node)
-            graphMaker.addLink(self.nodeId, dstNodeId, u"撰写")
+            if rel.author1.author_id == self.record.author_id:
+                anotherId = rel.author2.author_id
+            else:
+                anotherId = rel.author1.author_id
+            desc = rel.rel_desc
+            try:
+                anotherRecord = Author.objects.get(author_id=anotherId)
+            except:
+                continue
+            else:
+                node = AuthorEnt(anotherRecord.author_name, anotherRecord)
+                dstNodeId = node.addNode2Graph(graphMaker)
+                newNodes.append(node)
+                graphMaker.addLink(self.nodeId, dstNodeId, desc)
         return newNodes
 
 
