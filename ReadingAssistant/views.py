@@ -4,7 +4,6 @@ from django.shortcuts import *
 from django.http import HttpResponse
 from .webcookie import *
 import time
-#from .datas import *
 from .generate import *
 from ReadingAssistant.search.search import *
 
@@ -49,7 +48,9 @@ def hello(request):
                               {'visit_time': visit_time})
 
 
-def entity_modal(request, type, entId):
+def entity_modal(request):
+    type = request.GET['type']
+    entId = request.GET['entId']
     renderDict = {}
     try:
         eid = int(entId)
@@ -73,17 +74,17 @@ def entity_modal(request, type, entId):
                     renderDict['author_birth'] = record.author_birth
                     renderDict['author_death'] = record.author_death
                 if len(record.author_desc) != 0:
-                    renderDict['author_desc'] = record.author_desc
+                    renderDict['author_desc'] = record.author_desc.replace('\\n', '<br />').replace('\\r', '')
         elif type == 'poem':
             try:
                 record = Poem.objects.get(poem_id=entId)
             except Poem.DoesNotExist:
-        	    pass
+                pass
             else:
                 renderDict['entity_name'] = record.poem_name
                 renderDict['poem_name'] = record.poem_name
                 renderDict['entity_type'] = 'poem'
-                renderDict['poem_content'] = record.poem_content
+                renderDict['poem_content'] = record.poem_content.replace('\\n', '<br />').replace('\\r', '')
                 if len(record.poem_year) != 0:
                     renderDict['poem_year'] = record.poem_year
                 if len(record.poem_kind) != 0:
@@ -91,7 +92,7 @@ def entity_modal(request, type, entId):
                 if len(record.poem_pinyin) != 0:
                     renderDict['poem_pinyin'] = record.poem_pinyin
                 if len(record.poem_analysis) != 0:
-                    renderDict['poem_analysis'] = record.poem_analysis
+                    renderDict['poem_analysis'] = record.poem_analysis.replace('\\n', '<br />').replace('\\r', '')
         elif type == 'image':
             try:
                 record = Image.objects.get(image_id=entId)

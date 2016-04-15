@@ -25,9 +25,10 @@ function refresh() {
     }
 
     function click(type, id) {
-        //$('.ui.modal').modal('show');
-        window.showModalDialog("type=" + type + "&entid=" + id + "/", window,
-            "dialogHeight:" + window.innerHeight / 2 + "px;dialogWidth:" + window.innerWidth / 2 + "px;status=no;");
+        $.get("/map/modal/", {'type': type, 'entId': id}, function(ret) {
+            $('#modal_content').html(ret)
+        });
+        $('.ui.small.long.modal').modal('show');
     }
 
     var margin = {top: -5, right: -5, bottom: -5, left: -5};
