@@ -1,48 +1,20 @@
 /**
  * Created by LiYuntao on 2016/3/27.
  */
-///*
-//$(document).ready(function() {
-//    $("#searchBtn").click(function() {
-//        search();
-//    })
-//});
-//*/
-//function search() {
-//    var condition = $("#inputCondition").val();
-//    console.log(condition);
-//    $.ajax({
-//        type: "GET",
-//        /*
-//        data: {
-//            'csrfmiddlewaretoken': '{{csrf_token}}'
-//        },
-//        */
-//        url: "search/",
-//        data: "condition=" + condition,
-//        cache: false,
-//        success: function(result) {
-//            //json = eval(result);
-//            $("#inputCondition").html = result;
-//        }
-//    })
-//}
-//
-//$(document).ready(function(){
-//    $("#searchBtn").click(function(){
-//        var condition = $("#inputCondition").val();
-//
-//        $.get("/search/",{'condition': condition}, function(ret){
-//            $('#inputCondition').html(ret)
-//        })
-//    });
-//});
 
 function searchUrl() {
     var condition = $("#inputCondition").val();
     self.location = "/map/search/condition=" + condition;
 }
 
-function generateUrl() {
-    window.location.replace("/generatepoem/");
+function filterNode() {
+    var size = $("#filterSize").val();
+    size = parseInt(size);
+    if(size < 6 || size > 24) {
+        alert("请输入6-24之间的整数值");
+        //return false;
+    } else {
+        refresh(size);
+    }
+    //return true;
 }

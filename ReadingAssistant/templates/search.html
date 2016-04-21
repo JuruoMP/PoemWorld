@@ -1,7 +1,37 @@
-<form method="GET">
-    <div class="ui fluid action input">
-        <input type="text" placeholder="Search..." id="inputCondition">
-        <div class="ui primary button" id="searchBtn" onclick="searchUrl()">搜索</div>
-        <!--div class="ui button" id="searchBtn" onclick="generateUrl()">我要作诗</div-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Toolbar</title>
+</head>
+<body>
+
+<div class="ui grid">
+    <div class="ui ten wide column">
+        <form method="GET">
+            <div class="ui fluid action input">
+                <input type="text" placeholder="Search..." id="inputCondition">
+                <div class="ui primary button" id="searchBtn" onclick="searchUrl()">搜索</div>
+                <!--div class="ui button" id="searchBtn" onclick="generateUrl()">我要作诗</div-->
+            </div>
+        </form>
     </div>
-</form>
+
+    <div class="ui six wide column">
+        <form>
+            <div class="ui right labeled input">
+                <div class="ui label">显示权值大于</div>
+                <input type="text" placeholder="请输入6-24之间的值" id="filterSize">
+                <div class="ui label">的节点</div>
+                <div class="ui vertical divider"></div>
+                <div class="ui primary button" id="filterBtn" onclick="filterNode()">确定</div>
+                <!--div class="ui button" id="searchBtn" onclick="generateUrl()">我要作诗</div-->
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="ui divider"></div>
+
+</body>
+</html>

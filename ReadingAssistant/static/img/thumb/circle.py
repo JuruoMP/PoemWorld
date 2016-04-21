@@ -1,9 +1,10 @@
+# -*- coding:utf-8 -*-
 import os, math
-import Image
-import ImageDraw
+from PIL import Image
+from PIL import ImageDraw
 
 def circle(url):
-    print url
+    print(url)
     name = url.replace('.png', '')
     ima = Image.open(url).convert("RGBA")
     size = ima.size

@@ -11,81 +11,91 @@
 </head>
 <body>
 
-{% if entity_type == 'author' %}
-
-    {% if author_head_thumb %}
-        <img class="ui medium rounded image" src="{{ author_head_thumb | safe }}">
+<div class="ui grid">
+    <div class="ui two wide column"></div>
+    <div class="ui twelve wide column">
         <div class="ui divider"></div>
-    {% endif %}
 
-    <h3>{{ author_name | safe }}</h3>
+        {% if entity_type == 'author' %}
 
-    {% if author_belong %}
-        <div class="ui label">
-            朝代:
-            <div class="detail">{{ author_belong | safe }}</div>
-        </div>
-    {% endif %}
+            {% if author_head_thumb %}
+                <img class="ui medium rounded image" src="{{ author_head_thumb | safe }}">
+                <div class="ui divider"></div>
+            {% endif %}
 
-    {% if author_birth or author_death %}
-        <div class="ui segment">
-            {{ author_birth | safe }} - {{ author_death | safe }}
-        </div>
-    {% endif %}
+            <h3>{{ author_name | safe }}</h3>
 
-    {% if author_desc %}
-        <div class="ui segment">{{ author_desc | safe }}</div>
-    {% endif %}
+            {% if author_belong %}
+                <div class="ui label">
+                    朝代:
+                    <div class="detail">{{ author_belong | safe }}</div>
+                </div>
+            {% endif %}
 
-{% endif %}
+            {% if author_birth or author_death %}
+                <div class="ui piled segment">
+                    {{ author_birth | safe }} - {{ author_death | safe }}
+                </div>
+            {% endif %}
 
-{% if entity_type == 'poem' %}
+            {% if author_desc %}
+                <div class="ui piled segment">{{ author_desc | safe }}</div>
+            {% endif %}
 
-    <div class="ui center aligned segment">
-        <h3>{{ poem_name | safe }}</h3>
-        {{ poem_content | safe }}
+        {% endif %}
+
+        {% if entity_type == 'poem' %}
+
+            <div class="ui center aligned segment">
+                <h3>{{ poem_name | safe }}</h3>
+                {{ poem_content | safe }}
+            </div>
+
+            {% if poem_year %}
+                <a class="ui tag label">创作时间：{{ poem_year | safe }}年</a>
+            {% endif %}
+
+            {% if poem_kind %}
+                <a class="ui tag label">{{ poem_kind | safe }}</a>
+            {% endif %}
+
+            {% if poem_pinyin %}
+                <div class="ui divider"></div>
+                <div class="ui piled segment">{{ poem_pinyin | safe }}</div>
+            {% endif %}
+
+            {% if poem_analysis %}
+                <div class="ui divider"></div>
+                <div class="ui piled segment">{{ poem_analysis | safe }}</div>
+            {% endif %}
+
+        {% endif %}
+
+        {% if entity_type == 'image' %}
+
+            <h3>{{ image_name | safe }}</h3>
+
+            {% if image_emotion %}
+                <div class="ui divider"></div>
+                <div class="ui piled segment">
+                    表达情感：{{ image_emotion | safe }}
+                </div>
+            {% endif %}
+
+            {% if images %}
+                <div class="ui piled segment">
+                    表达相同情感的意象：
+                    {% for image in images %}
+                        <li>{{ image | safe }}</li>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+        {% endif %}
+
+        <div class="ui divider"></div>
     </div>
-
-    {% if poem_year %}
-        <a class="ui tag label">创作时间：{{ poem_year | safe }}年</a>
-    {% endif %}
-
-    {% if poem_kind %}
-        <a class="ui tag label">{{ poem_kind | safe }}</a>
-    {% endif %}
-
-    {% if poem_pinyin %}
-        <div class="ui divider"></div>
-        <div class="ui segment">{{ poem_pinyin | safe }}</div>
-    {% endif %}
-
-    {% if poem_analysis %}
-        <div class="ui divider"></div>
-        <div class="ui segment">{{ poem_analysis | safe }}</div>
-    {% endif %}
-
-{% endif %}
-
-{% if entity_type == 'image' %}
-
-    <h3>{{ image_name | safe }}</h3>
-
-    {% if image_emotion %}
-        <div class="ui divider"></div>
-        <div class="ui segment">
-            表达情感：{{ image_emotion | safe }}
-        </div>
-    {% endif %}
-
-    {% if images %}
-        <div class="ui segment">
-        表达相同情感的意象：
-        {% for image in images %}
-            <li>{{ image | safe }}</li>
-        {% endfor %}
-        </div>
-    {% endif %}
-
-{% endif %}
+    <div class="ui two wide column"></div>
+</div>
 
 </body>

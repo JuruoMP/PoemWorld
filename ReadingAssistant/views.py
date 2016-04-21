@@ -74,7 +74,8 @@ def entity_modal(request):
                     renderDict['author_birth'] = record.author_birth
                     renderDict['author_death'] = record.author_death
                 if len(record.author_desc) != 0:
-                    renderDict['author_desc'] = record.author_desc.replace('\\n', '<br />').replace('\\r', '')
+                    renderDict['author_desc'] = '<p>' + record.author_desc.replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
+                        .replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
         elif type == 'poem':
             try:
                 record = Poem.objects.get(poem_id=entId)
@@ -84,7 +85,9 @@ def entity_modal(request):
                 renderDict['entity_name'] = record.poem_name
                 renderDict['poem_name'] = record.poem_name
                 renderDict['entity_type'] = 'poem'
-                renderDict['poem_content'] = record.poem_content.replace('\\n', '<br />').replace('\\r', '')
+                # TODO: make href to entities on poem
+                renderDict['poem_content'] = '<p>' + record.poem_content.replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
+                    .replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
                 if len(record.poem_year) != 0:
                     renderDict['poem_year'] = record.poem_year
                 if len(record.poem_kind) != 0:
@@ -92,7 +95,8 @@ def entity_modal(request):
                 if len(record.poem_pinyin) != 0:
                     renderDict['poem_pinyin'] = record.poem_pinyin
                 if len(record.poem_analysis) != 0:
-                    renderDict['poem_analysis'] = record.poem_analysis.replace('\\n', '<br />').replace('\\r', '')
+                    renderDict['poem_analysis'] = '<p>' + record.poem_analysis.replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
+                        .replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
         elif type == 'image':
             try:
                 record = Image.objects.get(image_id=entId)
@@ -114,7 +118,11 @@ def entity_modal(request):
                 for emotion in emotionList:
                     relset2 = Image_Emotion.objects.exclude(image=record.image_id).filter(emotion=emotion.emotion_id)
                     for rel in relset2:
-                        iStrList.append(rel.image.image_name)
+                        image_name = rel.image.image_name
+                        link = '/map/search/condition=' + image_name
+                        content = '<a href="' + link + '">' + image_name + '</a>'
+                        # iStrList.append(rel.image.image_name)
+                        iStrList.append(content)
                 renderDict['images'] = iStrList
         else:
             pass

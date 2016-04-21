@@ -2,7 +2,31 @@
  * Created by LiYuntao on 2016/3/19.
  */
 
-function refresh() {
+function refresh(size) {
+
+    $("#map").html('');
+
+    var json_nodes = new Array();
+    var json_links = new Array();
+    var nodes_id = new Array();
+    //json_nodes = json.nodes;
+    //json_links = json.links;
+    var nodecnt = 0;
+    for(nodeid in json.nodes) {
+        if(json.nodes[nodeid].size >= size) {
+            json_nodes[nodecnt] = json.nodes[nodeid];
+            nodes_id[nodecnt] = nodeid;
+            nodecnt++;
+        }
+    }
+    var linkcnt = 0;
+    for(linkid in json.links) {
+        if(json.links[linkid].source.id in nodes_id && json.links[linkid].target.id in nodes_id) {
+            json_links[linkcnt++] = json.links[linkid];
+        } else if(json.links[linkid].source in nodes_id && json.links[linkid].target in nodes_id) {
+            json_links[linkcnt++] = json.links[linkid];
+        }
+    }
 
     function zoomed() {
         container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
@@ -26,9 +50,9 @@ function refresh() {
 
     function click(type, id) {
         $.get("/map/modal/", {'type': type, 'entId': id}, function(ret) {
-            $('#modal_content').html(ret)
+            $('#modal_content').html(ret);
+            $('.ui.small.long.modal').modal('show');
         });
-        $('.ui.small.long.modal').modal('show');
     }
 
     var margin = {top: -5, right: -5, bottom: -5, left: -5};
@@ -94,13 +118,13 @@ function refresh() {
 
     var container = svg.append("g");
 
-    force.nodes(json.nodes)
-        .links(json.links)
+    force.nodes(json_nodes)
+        .links(json_links)
         .start();
 
     var linkPath = container.append("g")
         .selectAll(".linkPath")
-        .data(json.links)
+        .data(json_links)
         .enter()
         .append("line")
         .style("stroke", "#ccc")
@@ -108,7 +132,7 @@ function refresh() {
 
     var linkText = container.append("g")
         .selectAll(".linkText")
-        .data(json.links)
+        .data(json_links)
         .enter()
         .append("text")
         .attr({
@@ -121,10 +145,10 @@ function refresh() {
             return d.value;
         });
 
-        var node = container.append("g")
+    var node = container.append("g")
         .attr("class", "nodes")
         .selectAll(".node")
-        .data(json.nodes)
+        .data(json_nodes)
         .enter()
         .append("g")
         .attr("class", "node")
@@ -187,8 +211,8 @@ function refresh() {
 
     force.on("tick", function () {
         linkPath.attr("x1", function (d) {
-                return d.source.x;
-            })
+            return d.source.x;
+        })
             .attr("y1", function (d) {
                 return d.source.y;
             })
@@ -199,11 +223,11 @@ function refresh() {
                 return d.target.y;
             });
         linkText.attr("x", function(d) {
-                return (d.source.x + d.target.x) / 2;
-            })
+            return (d.source.x + d.target.x) / 2;
+        })
             .attr("y", function(d) {
                 return (d.source.y + d.target.y) / 2;
-            })
+            });
         node.attr("transform", function (d) {
             return "translate(" + d.x + "," + d.y + ")";
         });
