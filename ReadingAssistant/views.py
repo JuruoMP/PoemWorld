@@ -32,10 +32,11 @@ def searchCondition(request, condition):
         return render_to_response("graph.html",
                                   {"center_entity": "None", })
     graphMaker = GraphMaker()
-    cNode.addNode2Graph(graphMaker)
-    AdjNodes = cNode.extendRels(graphMaker)
-    for aNode in AdjNodes:
-        aNode.extendRels(graphMaker)
+    cNode.addNode2Graph(graphMaker, centerFlag=True)
+    adjNodes = cNode.extendRels(graphMaker)
+    for aNode in adjNodes:
+        if not isinstance(aNode, ImageEnt) and not isinstance(aNode, AuthorEnt):
+            aNode.extendRels(graphMaker)
     #print graphMaker.toJson()
     return render_to_response("graph.html",
                               {"center_entity": cNode.getContent(),

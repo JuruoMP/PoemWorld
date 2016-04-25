@@ -20,11 +20,14 @@ class Author(models.Model):
 class Poem(models.Model):
     poem_id = models.AutoField(primary_key=True)
     poem_name = models.CharField(max_length=64)
+    poem_score = models.FloatField()
     poem_content = models.TextField()
     poem_pinyin = models.TextField(null=True)
+    poem_yun = models.CharField(max_length=128)
     poem_analysis = models.TextField()
     poem_kind = models.CharField(max_length=32,null=True)
     poem_year = models.CharField(max_length=8,null=True)
+    poem_music = models.CharField(max_length=128)
     entity_type = models.CharField(max_length=16, default="poem")
 
     class Meta:

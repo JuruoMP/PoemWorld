@@ -12,22 +12,8 @@ class CentralEnt:
     def getContent(self):
         return self.content
 
-    def addNode2Graph(self, graphMaker):
-        nodeType = self.record.entity_type
-        thumbPath = None
-        if nodeType == "author":
-            priKey = self.record.author_id
-            thumb_temp = self.record.author_head_thumb
-            if len(thumb_temp) != 0:
-                thumbPath = thumb_temp
-        elif nodeType == "poem":
-            priKey = self.record.poem_id
-        elif nodeType == "image":
-            priKey = self.record.image_id
-        else:
-            priKey = self.record.emotion_desc
-        self.nodeId = graphMaker.addNode(priKey, self.content, nodeType, thumbPath)
-        return self.nodeId
+    def addNode2Graph(self, graphMaker, centerFlag=False):
+        pass
 
     #This function will return a QuerySet of candidate central entities
     def executeQuery(self):
@@ -49,6 +35,16 @@ class AuthorEnt(CentralEnt):
         self.record = qset[0]
         self.content = self.record.author_name
         return True
+
+    def addNode2Graph(self, graphMaker, centerFlag=False):
+        priKey = self.record.author_id
+        thumb_temp = self.record.author_head_thumb
+        if len(thumb_temp) != 0:
+            thumbPath = thumb_temp
+        else:
+            thumbPath = None
+        self.nodeId = graphMaker.addNode(priKey, self.content, "author", score=8, thumbPath=thumbPath, isCenter=centerFlag)
+        return self.nodeId
 
     def extendRels(self, graphMaker):
         newNodes = []
@@ -90,6 +86,11 @@ class PoemEnt(CentralEnt):
         self.content = self.record.poem_name
         return True
 
+    def addNode2Graph(self, graphMaker, centerFlag=False):
+        priKey = self.record.poem_id
+        self.nodeId = graphMaker.addNode(priKey, self.content, "poem", score=self.record.poem_score, isCenter=centerFlag)
+        return self.nodeId
+
     def extendRels(self, graphMaker):
         newNodes = []
         relset1 = Author_Poem.objects.filter(poem=self.record.poem_id)
@@ -121,6 +122,11 @@ class ImageEnt(CentralEnt):
         self.content = self.record.image_name
         return True
 
+    def addNode2Graph(self, graphMaker, centerFlag=False):
+        priKey = self.record.image_id
+        self.nodeId = graphMaker.addNode(priKey, self.content, "image", score=3, isCenter=centerFlag)
+        return self.nodeId
+
     def extendRels(self, graphMaker):
         newNodes = []
         relset1 = Poem_Image.objects.filter(image=self.record.image_id)
@@ -130,13 +136,4 @@ class ImageEnt(CentralEnt):
             dstNodeId = node.addNode2Graph(graphMaker)
             newNodes.append(node)
             graphMaker.addLink(self.nodeId, dstNodeId, u"相关诗歌")
-        '''
-        relset2 = Image_Emotion.objects.filter(image=self.record.image_id)
-        for rel in relset2:
-            emotion = rel.emotion
-            node = EmotionEnt(emotion.emotion_name, emotion)
-            dstNodeId =  node.addNode2Graph(graphMaker)
-            newNodes.append(node)
-            graphMaker.addLink(self.nodeId, dstNodeId, u"情感倾向")
-        '''
         return newNodes
