@@ -7,7 +7,7 @@
 <body>
 
 <div class="ui grid">
-    <div class="ui ten wide column">
+    <div class="ui left floated six wide column">
         <form method="GET">
             <div class="ui fluid action input">
                 <input type="text" placeholder="Search..." id="inputCondition">
@@ -17,18 +17,26 @@
         </form>
     </div>
 
-    <div class="ui six wide column">
+    <div class="ui center floated six wide column">
         <form>
             <div class="ui right labeled input">
                 <div class="ui label">显示权值大于</div>
                 <input type="text" placeholder="请输入6-24之间的值" id="filterSize">
                 <div class="ui label">的节点</div>
-                <div class="ui vertical divider"></div>
                 <div class="ui primary button" id="filterBtn" onclick="filterNode()">确定</div>
                 <!--div class="ui button" id="searchBtn" onclick="generateUrl()">我要作诗</div-->
             </div>
         </form>
     </div>
+
+    <!--div class="ui right floated four wide column">
+        <div class="ui icon buttons">
+            <button class="ui toggle button">诗人</button>
+            <button class="ui toggle button">诗词</button>
+            <button class="ui toggle button">意向</button>
+        </div>
+    </div-->
+    <!--div class="ui vertical divider"></div-->
 </div>
 
 <div class="ui divider"></div>

@@ -2,6 +2,8 @@
  * Created by LiYuntao on 2016/3/19.
  */
 
+first_time = true;
+
 function refresh(size) {
 
     $("#map").html('');
@@ -12,21 +14,53 @@ function refresh(size) {
     //json_nodes = json.nodes;
     //json_links = json.links;
     var nodecnt = 0;
-    for(nodeid in json.nodes) {
+    //for(nodeid in json.nodes) {
+    for(var i=0; i<json.nodes.length; i++) {
+        nodeid = i;
         if(json.nodes[nodeid].size >= size) {
             json_nodes[nodecnt] = json.nodes[nodeid];
-            nodes_id[nodecnt] = nodeid;
+            if(first_time) {
+                nodes_id[nodecnt] = nodeid;
+            } else {
+                nodes_id[nodecnt] = json.nodes[nodeid].id;
+            }
             nodecnt++;
         }
     }
     var linkcnt = 0;
-    for(linkid in json.links) {
+    for(var linkid = 0; linkid < json.links.length; linkid++) {
+    //for(linkid in json.links) {
+        //linkid = json.links[i];
+        if(first_time) {
+            var status1 = false, status2 = false;
+            for (var j = 0; j < nodes_id.length; j++) {
+                //for(id in nodes_id) {
+                id = nodes_id[j];
+                if (id == json.links[linkid].source) {
+                    status1 = true;
+                } else if (id == json.links[linkid].target) {
+                    status2 = true;
+                }
+            }
+            if (status1 && status2) {
+                json_links[linkcnt++] = json.links[linkid];
+            }
+        } else {
+            if(json.links[linkid].source.size >= size && json.links[linkid].target.size >= size) {
+                json_links[linkcnt++] = json.links[linkid];
+            }
+        }
+
+        /*
         if(json.links[linkid].source.id in nodes_id && json.links[linkid].target.id in nodes_id) {
             json_links[linkcnt++] = json.links[linkid];
         } else if(json.links[linkid].source in nodes_id && json.links[linkid].target in nodes_id) {
             json_links[linkcnt++] = json.links[linkid];
         }
+        */
     }
+
+    first_time = false;
 
     function zoomed() {
         container.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
@@ -232,5 +266,4 @@ function refresh(size) {
             return "translate(" + d.x + "," + d.y + ")";
         });
     });
-
 }
