@@ -3,6 +3,7 @@
 <head>
     <!-- For semantic UI -->
     <script src="/static/js/jquery-1.12.2.min.js" charset="utf-8"></script>
+    <script src="/static/js/jquery.cookie.js" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
     <script src="/static/semantic/dist/semantic.min.js"></script>
     <!-- For HTML -->
@@ -17,7 +18,7 @@
 
 <div class="zoomed masthead segment">
     <div class="three width column">
-        <img class="ui medium centered image" src="/static/img/thumb/0.png" />
+        <img class="ui medium centered image" src="/static/img/logo.png" />
     </div>
     <div class="ui container">
         <div class="ui hidden divider"></div>
@@ -34,15 +35,37 @@
 
         <div class="ui hidden divider"></div>
 
-        <a href="/map/" class="ui huge download button">
+        <button class="ui huge download button" onclick="enter()">
             图观诗界
-        </a>
+        </button>
         <div class="ui vertical hidden divider"></div>
         <a href="/generatepoem/" class="ui huge download button">
-            我要作诗
+            娱乐作诗
         </a>
     </div>
 </div>
 
 </body>
 </html>
+
+<div class="ui small modal">
+    <div class="ui center aligned segment">
+        <h3 class="ui segment">
+            请选择您的身份
+        </h3>
+        <div class="ui divider"></div>
+        <button class="ui button" onclick="jump(0)">新手入门</button>
+        <button class="ui button" onclick="jump(1)">高手进阶</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function enter() {
+        $('.ui.small.modal').modal('show');
+    }
+
+    function jump(level) {
+        $.cookie('user_level', level);
+        window.location.replace("/map/");
+    }
+</script>

@@ -9,7 +9,18 @@
     <link rel="stylesheet" type="text/css" href="/static/semantic/dist/semantic.min.css">
     <script src="/static/semantic/dist/semantic.min.js"></script>
 </head>
-<body onload="refresh(16)">
+<body onload="load()">
+<script type="text/javascript">
+    function load() {
+        var user_level = $.cookie('user_level');
+        if(user_level == 0) {
+            refresh(16);
+            refresh(20);
+        } else {
+            refresh(16);
+        }
+    }
+</script>
 
 {% include "header.html" %}
 {% include "search.html" %}
@@ -20,7 +31,6 @@
     json = {{ json | safe }};
 </script>
 
-<script src="/static/js/modal.js" charset="utf-8"></script>
 <script src="/static/js/data.js" charset="utf-8"></script>
 <script src="/static/js/graph.js" charset="utf-8"></script>
 

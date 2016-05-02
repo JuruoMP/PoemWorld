@@ -8,6 +8,34 @@ function refresh(size) {
 
     $("#map").html('');
 
+    var margin = {top: -5, right: -5, bottom: -5, left: -5};
+
+    var winWidth = -1, winHeight = -1;
+    if (window.innerWidth)
+        winWidth = window.innerWidth;
+    else if ((document.body) && (document.body.clientWidth))
+        winWidth = document.body.clientWidth;
+    if (window.innerHeight)
+        winHeight = window.innerHeight;
+    else if ((document.body) && (document.body.clientHeight))
+        winHeight = document.body.clientHeight;
+    if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth) {
+        winHeight = document.documentElement.clientHeight;
+        winWidth = document.documentElement.clientWidth;
+    }
+
+    var width, height;
+    if (winWidth != -1) {
+        width = winWidth - margin.left - margin.right;
+    } else {
+        width = 800 - margin.left - margin.right;
+    }
+    if (winHeight != -1) {
+        height = winHeight - margin.top - margin.bottom;
+    } else {
+        height = 600 - margin.top - margin.bottom;
+    }
+
     var json_nodes = new Array();
     var json_links = new Array();
     var nodes_id = new Array();
@@ -26,6 +54,25 @@ function refresh(size) {
             }
             nodecnt++;
         }
+    }
+    var centered = false;
+    var centered_id = -1;
+    for(var i=0; i<json_nodes.length; i++) {
+        if(json_nodes[i].centered == 1) {
+            json_nodes[i].fixed = true;
+            json_nodes[i].x = width / 2;
+            json_nodes[i].y = height / 2;
+            centered = true;
+            break;
+        }
+        if(json_nodes[i].name == '月') {
+            centered_id = i;
+        }
+    }
+    if(!centered) {
+        json_nodes[centered_id].fixed = true;
+        json_nodes[centered_id].x = width / 2;
+        json_nodes[centered_id].y = height / 2;
     }
     var linkcnt = 0;
     for(var linkid = 0; linkid < json.links.length; linkid++) {
@@ -79,7 +126,8 @@ function refresh(size) {
     }
 
     function dragended(d) {
-        d3.select(this).classed("draggind", false);
+        d.fixed = true;
+        d3.select(this).classed("dragging", false);
     }
 
     function click(type, id) {
@@ -89,33 +137,6 @@ function refresh(size) {
         });
     }
 
-    var margin = {top: -5, right: -5, bottom: -5, left: -5};
-
-    var winWidth = -1, winHeight = -1;
-    if (window.innerWidth)
-        winWidth = window.innerWidth;
-    else if ((document.body) && (document.body.clientWidth))
-        winWidth = document.body.clientWidth;
-    if (window.innerHeight)
-        winHeight = window.innerHeight;
-    else if ((document.body) && (document.body.clientHeight))
-        winHeight = document.body.clientHeight;
-    if (document.documentElement && document.documentElement.clientHeight && document.documentElement.clientWidth) {
-        winHeight = document.documentElement.clientHeight;
-        winWidth = document.documentElement.clientWidth;
-    }
-
-    var width, height;
-    if (winWidth != -1) {
-        width = winWidth - margin.left - margin.right;
-    } else {
-        width = 800 - margin.left - margin.right;
-    }
-    if (winHeight != -1) {
-        height = winHeight - margin.top - margin.bottom;
-    } else {
-        height = 600 - margin.top - margin.bottom;
-    }
     var colors = d3.scale.category20();
 
     var force = d3.layout.force()
