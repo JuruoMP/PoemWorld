@@ -21,7 +21,6 @@ class GraphMaker():
         else:
             return -1
 
-
     def addNode(self, priKey, entName, entType, score=16, thumbPath=None, isCenter=False):
         key = str(entType) + '_' + str(priKey)
         if self.nodeDict.get(key) is None:
@@ -80,7 +79,6 @@ class GraphMaker():
             newLink['value'] = typeName
             self.linkList.append(newLink)
             self.linkDict[str(srcNodeId) + '_' + str(dstNodeId)] = True
-
 
     def toJson(self):
         jsonData = {}

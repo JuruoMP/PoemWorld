@@ -137,7 +137,20 @@ function refresh(size) {
         });
     }
 
-    var colors = d3.scale.category20();
+    //var colors = d3.scale.category20();
+
+    var colors = function get_color(type) {
+        if(type == 'poem') {
+            return '#ff7f0e';
+        } else if(type == 'author') {
+            return '#aec7e8';
+        } else if(type == 'image') {
+            return '#1f77b4';
+        } else {
+            return '#ffffff';
+        }
+    }
+
 
     var force = d3.layout.force()
         .gravity(0.05)
@@ -182,7 +195,7 @@ function refresh(size) {
         .data(json_links)
         .enter()
         .append("line")
-        .style("stroke", "#ccc")
+        .style("stroke", "#777777")
         .style("stroke-width", 1);
 
     var linkText = container.append("g")
