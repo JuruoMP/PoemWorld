@@ -28,7 +28,7 @@ def getEntList_bak(text):
 					entList.add(word)
 	return entList
 
-def getEntList(text):
+def getEntList(text, imageOnly=False):
 	#tokens = jieba.tokenize(text, mode='search')
 	tokens = jieba.tokenize(text)
 	entList = set([])
@@ -39,8 +39,9 @@ def getEntList(text):
 		except Exception:
 			pass
 		else:
-			entList.add(word)
-			splitPoints.append((word[1], word[2]))
+			if not imageOnly:
+				entList.add(word[0])
+				splitPoints.append((word[1], word[2]))
 
 		try:
 			recSet = Image.objects.filter(image_name=word[0])
@@ -48,7 +49,7 @@ def getEntList(text):
 			pass
 		else:
 			if recSet.exists():
-				entList.add(word)
+				entList.add(word[0])
 				splitPoints.append((word[1], word[2]))
 	#sorted(splitPoints, key=lambda point : point[0])
 	return entList, splitPoints 

@@ -18,7 +18,6 @@ def homePage(request):
 
 def map(request):
     graphMaker = getWholeGraph()
-    print(graphMaker)
     return render_to_response("graph.html",
                               {"center_entity": "ALL",
                                "json": graphMaker.toJson()})
@@ -90,6 +89,7 @@ def entity_modal(request):
                 renderDict['poem_name'] = record.poem_name
                 renderDict['entity_type'] = 'poem'
                 # TODO: make href to entities on poem
+
                 renderDict['poem_content'] = '<p>' + addHref2Text(record.poem_content).replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
                     .replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
                 if len(record.poem_year) != 0:
@@ -155,7 +155,22 @@ def analysis(request):
     content = request.GET['content']
     result = '12345678'
     yunlv_result = analysis_yunlv(content)
-    #print(yunlv_result)
+    entSet, _ = getEntList(content, imageOnly=True)
+    yunlv_result['entity_analysis'] = list(entSet) 
+    emotionList = []
+    for ent in entSet:
+        try:
+            record = Image.objects.get(image_name=ent)
+        except Image.DoesNotExist:
+            pass
+        else:
+            relset = Image_Emotion.objects.filter(image=record.image_id)
+            for rel in relset:
+                emotion = rel.emotion
+                emotionList.append(emotion.emotion_desc)
+        if len(emotionList) != 0:
+            yunlv_result['emotion_analysis'] = emotionList
+    
     return render_to_response('analysis_result.html',
                               yunlv_result)
 
