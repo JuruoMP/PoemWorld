@@ -144,8 +144,14 @@ def generate_poem(request, string, num, type, yayuntype):
 
 
 def analysis_empty(request):
-    return render_to_response('analysis.html',
-                              {'analysis_result': 'FILL RESULT HERE'})
+    return render_to_response('analysis.html')
+
+
+def analysis(request):
+    content = request.GET['content']
+    result = '12345678'
+    return render_to_response('analysis_result.html',
+                              {'analysis_result': result})
 
 
 def rank_model(request):

@@ -16,19 +16,22 @@
 <div class="ui container">
     <div class="ui four wide column"></div>
     <div class="ui fluid action input">
-        <input type="text" placeholder="请输入诗句">
-        <div class="ui button">赏析</div>
+        <input type="text" placeholder="请输入诗句", id="analysisContent">
+        <div class="ui button" id="analysisBtn" onclick="analysisPoem()">赏析</div>
     </div>
-    {% if analysis_result %}
-        <div class="ui divider"></div>
-        <h4>赏析结果：</h4>
-        <div class="ui segment">
-            {{ analysis_result }}
-        </div>
-    {% endif %}
+    <div id="analysisResult"></div>
     <div class="ui four wide column"></div>
 </div>
 
 
 </body>
 </html>
+
+<script type="text/javascript">
+    function analysisPoem() {
+        var content = $('#analysisContent').val();
+        $.get("/analysis_content/", {'content': content}, function(ret) {
+            $('#analysisResult').html(ret);
+        });
+    }
+</script>
