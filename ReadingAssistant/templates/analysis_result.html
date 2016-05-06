@@ -1,5 +1,23 @@
 <div class="ui divider"></div>
 <h4>赏析结果：</h4>
-<div class="ui segment">
-    {{ analysis_result }}
-</div>
+{% if yunlv_sound or yunlv_judge %}
+    <div class="ui segment">
+        韵律信息为：{{ yunlv_sound }}
+        {{ yunlv_judge }}
+    </div>
+{% endif %}
+{% if entity_analysis %}
+    <div class="ui segment">
+        包含的实体有：{{ entity_analysis }}
+    </div>
+{% endif %}
+{%  if emotion_analysis %}
+    <div class="ui segment">
+        可能表达的感情：{{ emotion_analysis }}emotion_analysis
+    </div>
+{% endif %}
+{% if not yunlv_sound and not yunlv_judge and not entity_analysis and not emotion_analysis %}
+    <div class="ui segment">
+        非常抱歉，你输入的内容无法解析。
+    </div>
+{% endif %}
