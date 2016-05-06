@@ -41,13 +41,12 @@
 
 <script type="text/javascript">
     function change_level(user_level) {
-        $.cookie('user_level', user_level);
+        $.cookie('user_level', user_level, {path: "/"});
         refresh(user_level);
     }
-    $('#inputCondition').bind('keydown', function(event) {
+    $('#inputCondition').bind('keyup', function(event) {
         if (event.keyCode == "13") {
-            //$('#searchBtn').click();
-            searchUrl();
+            $('#searchBtn').click();
         }
     });
 </script>

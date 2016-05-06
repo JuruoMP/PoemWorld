@@ -13,7 +13,10 @@
 {% endif %}
 {%  if emotion_analysis %}
     <div class="ui segment">
-        可能表达的感情：{{ emotion_analysis }}emotion_analysis
+    <h5>可能表达的感情：</h5>
+    {% for emotion in emotion_analysis %}
+        {{ emotion }}<br />
+    {% endfor %}
     </div>
 {% endif %}
 {% if not yunlv_sound and not yunlv_judge and not entity_analysis and not emotion_analysis %}

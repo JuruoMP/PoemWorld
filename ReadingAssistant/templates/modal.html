@@ -55,11 +55,13 @@
                 <div class="ui divider"></div>
                 <div class="ui segment">
                     <h4>播放朗诵：</h4>
-                    <audio controls="controls">
-                        <source src="{{ poem_audio }}" type="audio/mp3" />
-                        <!--source src="song.ogg" type="/static/audio/ogg" /-->
-                        Your browser does not support this audio format.
-                    </audio>
+                    <div align="center">
+                        <audio controls="controls">
+                            <source src="{{ poem_audio }}" type="audio/mp3" />
+                            <!--source src="song.ogg" type="/static/audio/ogg" /-->
+                            Your browser does not support this audio format.
+                        </audio>
+                    </div>
                 </div>
             {% endif %}
 
