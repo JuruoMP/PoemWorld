@@ -14,10 +14,12 @@
     function load() {
         var user_level = $.cookie('user_level');
         if(user_level == 0) {
-            refresh(16);
+            //refresh(16);
             refresh(20);
+        } else if(user_level == 1) {
+            refresh(12);
         } else {
-            refresh(16);
+            refresh(6);
         }
     }
 </script>

@@ -7,6 +7,7 @@ first_time = true;
 function refresh(size) {
 
     $("#map").html('');
+    $('#modal_content').html('');
 
     var margin = {top: -5, right: -5, bottom: -5, left: -5};
 
@@ -46,12 +47,12 @@ function refresh(size) {
     for(var i=0; i<json.nodes.length; i++) {
         nodeid = i;
         if(json.nodes[nodeid].size >= size) {
-        //if(json.nodes[nodeid].size <= 15) {
+        //if(json.nodes[nodeid].size < 15) {
             json_nodes[nodecnt] = json.nodes[nodeid];
             if(first_time) {
                 nodes_id[nodecnt] = nodeid;
             } else {
-                nodes_id[nodecnt] = json.nodes[nodeid].id;
+                nodes_id[nodecnt] = nodecnt;//json.nodes[nodeid].id;
             }
             nodecnt++;
         }
@@ -71,6 +72,9 @@ function refresh(size) {
         }
     }
     if(centered == false) {
+        if(centered_id == -1) {
+            centered_id = 0;
+        }
         json_nodes[centered_id].fixed = true;
         json_nodes[centered_id].x = width / 2;
         json_nodes[centered_id].y = height / 2;
@@ -83,7 +87,7 @@ function refresh(size) {
             var idx = -1, idy = -1;
             for (var j = 0; j < nodes_id.length; j++) {
                 //for(id in nodes_id) {
-                id = nodes_id[j];
+                var id = nodes_id[j];
                 if (id === json.links[linkid].source) {
                     idx = j;
                 } else if (id === json.links[linkid].target) {
@@ -101,6 +105,8 @@ function refresh(size) {
                 json_links[linkcnt++] = json.links[linkid];
             }
         }
+        //json_nodes = json.nodes;
+        //json_links = json.links;
 
         /*
         if(json.links[linkid].source.id in nodes_id && json.links[linkid].target.id in nodes_id) {
@@ -138,6 +144,7 @@ function refresh(size) {
         $.get("/map/modal/", {'type': type, 'entId': id}, function(ret) {
             $('#modal_content').html(ret);
             $('.ui.small.long.modal').modal('show');
+            //$('#modal_content').modal('show');
         });
     }
 

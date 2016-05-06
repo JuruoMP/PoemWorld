@@ -99,6 +99,7 @@ def entity_modal(request):
                 if len(record.poem_analysis) != 0:
                     renderDict['poem_analysis'] = '<p>' + record.poem_analysis.replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
                         .replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
+                renderDict['poem_audio'] = '/static/audio/demo.mp3'
         elif type == 'image':
             try:
                 record = Image.objects.get(image_id=entId)
@@ -140,6 +141,15 @@ def generate_poem(request, string, num, type, yayuntype):
     return render_to_response('gen_poem.html',
                               {'generated': 'true',
                                'generate_response': content})
+
+
+def analysis_empty(request):
+    return render_to_response('analysis.html',
+                              {'analysis_result': 'FILL RESULT HERE'})
+
+
+def rank_model(request):
+    return render_to_response('rank_model.html', {})
 
 
 def demo(request):

@@ -2,7 +2,7 @@
 from ReadingAssistant.models import *
 from math import log
 class GraphMaker():
-    def __init__(self, minSize=14, maxSize=24):
+    def __init__(self, minSize=6, maxSize=24):
         self.count = 0
         self.minSize = minSize
         self.maxSize = maxSize

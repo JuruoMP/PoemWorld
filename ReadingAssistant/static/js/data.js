@@ -10,11 +10,13 @@ function searchUrl() {
 function filterNode() {
     var size = $("#filterSize").val();
     size = parseInt(size);
+    /*
     if(size < 6 || size > 24) {
         alert("请输入6-24之间的整数值");
         //return false;
     } else {
         refresh(size);
     }
-    //return true;
+    */
+    refresh(size)
 }

@@ -25,6 +25,8 @@ urlpatterns = [
     url(r'^map/modal/$', views.entity_modal),
     url(r'^map/search/condition=(.*)', views.searchCondition),
     url(r'^generatepoem/$', views.generate_poem_empty),
+    url(r'^analysis/$', views.analysis_empty),
+    url(r'^rankmodel/$', views.rank_model),
     url(r'^generatepoem/string=(.*)&num=(.*)&type=(.*)&yayuntype=(.*)/$', views.generate_poem),
     url(r'^hello/$', views.hello),
     url(r'^demo/$', views.demo),

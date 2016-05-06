@@ -51,21 +51,39 @@
                 {{ poem_content | safe }}
             </div>
 
+            {% if poem_audio %}
+                <div class="ui divider"></div>
+                <div class="ui segment">
+                    <h4>播放朗诵：</h4>
+                    <audio controls="controls">
+                        <source src="{{ poem_audio }}" type="audio/mp3" />
+                        <!--source src="song.ogg" type="/static/audio/ogg" /-->
+                        Your browser does not support this audio format.
+                    </audio>
+                </div>
+            {% endif %}
+
             {% if poem_year %}
-                <a class="ui tag label">创作时间：{{ poem_year | safe }}年</a>
+                <div class="ui divider"></div>
+                <h4>创作时间：</h4>
+                <a class="ui tag label">{{ poem_year | safe }}年</a>
             {% endif %}
 
             {% if poem_kind %}
+                <div class="ui divider"></div>
+                <h4>诗词分类：</h4>
                 <a class="ui tag label">{{ poem_kind | safe }}</a>
             {% endif %}
 
             {% if poem_pinyin %}
                 <div class="ui divider"></div>
-                <div class="ui piled segment">{{ poem_pinyin | safe }}</div>
+                <h4>诗词注音：</h4>
+                <div class="ui center aligned piled segment">{{ poem_pinyin | safe }}</div>
             {% endif %}
 
             {% if poem_analysis %}
                 <div class="ui divider"></div>
+                <h4>诗词赏析：</h4>
                 <div class="ui piled segment">{{ poem_analysis | safe }}</div>
             {% endif %}
 
@@ -78,15 +96,16 @@
             {% if image_emotion %}
                 <div class="ui divider"></div>
                 <div class="ui piled segment">
-                    表达情感：{{ image_emotion | safe }}
+                    <h5>表达情感：</h5>
+                    <p>{{ image_emotion | safe }}</p>
                 </div>
             {% endif %}
 
             {% if images %}
                 <div class="ui piled segment">
-                    表达相同情感的意象：
+                    <h5>表达相同情感的意象：</h5>
                     {% for image in images %}
-                        <li>{{ image | safe }}</li>
+                        <li><p>{{ image | safe }}</p></li>
                     {% endfor %}
                 </div>
             {% endif %}
