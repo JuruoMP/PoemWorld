@@ -99,7 +99,9 @@ def entity_modal(request):
                 if len(record.poem_analysis) != 0:
                     renderDict['poem_analysis'] = '<p>' + record.poem_analysis.replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
                         .replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
-                renderDict['poem_audio'] = '/static/audio/demo.mp3'
+                if len(record.poem_music) != 0:
+                    tokens = record.poem_music.split(r'\\')
+                    renderDict['poem_audio'] = '/' + tokens[1] + '/' + tokens[2] + '/' + tokens[3];
         elif type == 'image':
             try:
                 record = Image.objects.get(image_id=entId)
