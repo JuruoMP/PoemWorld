@@ -44,6 +44,12 @@
         $.cookie('user_level', user_level);
         refresh(user_level);
     }
+    $('#inputCondition').bind('keydown', function(event) {
+        if (event.keyCode == "13") {
+            //$('#searchBtn').click();
+            searchUrl();
+        }
+    });
 </script>
 
 <div class="ui divider"></div>
