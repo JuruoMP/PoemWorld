@@ -2,7 +2,7 @@
 from ReadingAssistant.models import *
 from math import log
 class GraphMaker():
-    def __init__(self, minSize=16, maxSize=24):
+    def __init__(self, minSize=14, maxSize=24):
         self.count = 0
         self.minSize = minSize
         self.maxSize = maxSize
@@ -40,6 +40,8 @@ class GraphMaker():
                 newNode['size'] = 30
             else:
                 newNode['centered'] = 0
+
+            newNode['weight'] = newNode['size']
             
             self.nodeList.append(newNode)
             self.nodeDict[key] = self.count

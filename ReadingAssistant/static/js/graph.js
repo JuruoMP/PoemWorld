@@ -46,6 +46,7 @@ function refresh(size) {
     for(var i=0; i<json.nodes.length; i++) {
         nodeid = i;
         if(json.nodes[nodeid].size >= size) {
+        //if(json.nodes[nodeid].size <= 15) {
             json_nodes[nodecnt] = json.nodes[nodeid];
             if(first_time) {
                 nodes_id[nodecnt] = nodeid;
@@ -69,7 +70,7 @@ function refresh(size) {
             centered_id = i;
         }
     }
-    if(!centered) {
+    if(centered == false) {
         json_nodes[centered_id].fixed = true;
         json_nodes[centered_id].x = width / 2;
         json_nodes[centered_id].y = height / 2;
@@ -79,18 +80,21 @@ function refresh(size) {
     //for(linkid in json.links) {
         //linkid = json.links[i];
         if(first_time) {
-            var status1 = false, status2 = false;
+            var idx = -1, idy = -1;
             for (var j = 0; j < nodes_id.length; j++) {
                 //for(id in nodes_id) {
                 id = nodes_id[j];
-                if (id == json.links[linkid].source) {
-                    status1 = true;
-                } else if (id == json.links[linkid].target) {
-                    status2 = true;
+                if (id === json.links[linkid].source) {
+                    idx = j;
+                } else if (id === json.links[linkid].target) {
+                    idy = j;
                 }
             }
-            if (status1 && status2) {
-                json_links[linkcnt++] = json.links[linkid];
+            if (idx != -1 && idy != -1) {
+                json_links[linkcnt] = json.links[linkid];
+                json_links[linkcnt].source = idx;
+                json_links[linkcnt].target = idy;
+                linkcnt++;
             }
         } else {
             if(json.links[linkid].source.size >= size && json.links[linkid].target.size >= size) {
@@ -186,9 +190,9 @@ function refresh(size) {
 
     var container = svg.append("g");
 
-    force.nodes(json_nodes)
-        .links(json_links)
-        .start();
+    force.nodes(json_nodes);
+    force.links(json_links);
+    force.start();
 
     var linkPath = container.append("g")
         .selectAll(".linkPath")

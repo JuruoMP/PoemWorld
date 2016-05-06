@@ -16,6 +16,7 @@ def homePage(request):
 
 def map(request):
     graphMaker = getWholeGraph()
+    print(graphMaker)
     return render_to_response("graph.html",
                               {"center_entity": "ALL",
                                "json": graphMaker.toJson()})
