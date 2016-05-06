@@ -29,15 +29,22 @@
         </form>
     </div>
 
-    <!--div class="ui right floated four wide column">
+    <div class="ui right floated four wide column">
         <div class="ui icon buttons">
-            <button class="ui toggle button">诗人</button>
-            <button class="ui toggle button">诗词</button>
-            <button class="ui toggle button">意向</button>
+            <button class="ui toggle button" onclick="change_level(16)">入门</button>
+            <button class="ui toggle button" onclick="change_level(12)">进阶</button>
+            <button class="ui toggle button" onclick="change_level(6)">专家</button>
         </div>
-    </div-->
+    </div>
     <!--div class="ui vertical divider"></div-->
 </div>
+
+<script type="text/javascript">
+    function change_level(user_level) {
+        $.cookie('user_level', user_level);
+        refresh(user_level);
+    }
+</script>
 
 <div class="ui divider"></div>
 

@@ -19,7 +19,7 @@
         {% if entity_type == 'author' %}
 
             {% if author_head_thumb %}
-                <img class="ui medium rounded image" src="{{ author_head_thumb | safe }}">
+                <img class="ui center aligned small rounded image" src="{{ author_head_thumb | safe }}">
                 <div class="ui divider"></div>
             {% endif %}
 
@@ -77,7 +77,7 @@
 
             {% if poem_pinyin %}
                 <div class="ui divider"></div>
-                <h4>诗词注音：</h4>
+                <h4>诗词平仄：</h4>
                 <div class="ui center aligned piled segment">{{ poem_pinyin | safe }}</div>
             {% endif %}
 

@@ -6,6 +6,7 @@ from .webcookie import *
 import time
 from .generate import *
 from ReadingAssistant.search.search import *
+from ReadingAssistant.analysis.yunlv import *
 
 # Create your views here.
 
@@ -152,8 +153,10 @@ def analysis_empty(request):
 def analysis(request):
     content = request.GET['content']
     result = '12345678'
+    yunlv_result = analysis_yunlv(content)
+    #print(yunlv_result)
     return render_to_response('analysis_result.html',
-                              {'analysis_result': result})
+                              yunlv_result)
 
 
 def rank_model(request):
