@@ -6,6 +6,7 @@ from .webcookie import *
 import time
 from .generate import *
 from ReadingAssistant.search.search import *
+from ReadingAssistant.search.entRec import *
 
 # Create your views here.
 
@@ -76,7 +77,7 @@ def entity_modal(request):
                     renderDict['author_birth'] = record.author_birth
                     renderDict['author_death'] = record.author_death
                 if len(record.author_desc) != 0:
-                    renderDict['author_desc'] = '<p>' + record.author_desc.replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
+                    renderDict['author_desc'] = '<p>' + addHref2Text(record.author_desc).replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
                         .replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
         elif type == 'poem':
             try:
@@ -88,7 +89,8 @@ def entity_modal(request):
                 renderDict['poem_name'] = record.poem_name
                 renderDict['entity_type'] = 'poem'
                 # TODO: make href to entities on poem
-                renderDict['poem_content'] = '<p>' + record.poem_content.replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
+
+                renderDict['poem_content'] = '<p>' + addHref2Text(record.poem_content).replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
                     .replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
                 if len(record.poem_year) != 0:
                     renderDict['poem_year'] = record.poem_year
@@ -97,7 +99,7 @@ def entity_modal(request):
                 if len(record.poem_pinyin) != 0:
                     renderDict['poem_pinyin'] = record.poem_pinyin
                 if len(record.poem_analysis) != 0:
-                    renderDict['poem_analysis'] = '<p>' + record.poem_analysis.replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
+                    renderDict['poem_analysis'] = '<p>' + addHref2Text(record.poem_analysis).replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
                         .replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
                 if len(record.poem_music) != 0:
                     tokens = record.poem_music.split(r'\\')
