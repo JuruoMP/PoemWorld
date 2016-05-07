@@ -8,6 +8,7 @@ from .generate import *
 from ReadingAssistant.search.search import *
 from ReadingAssistant.search.entRec import *
 from ReadingAssistant.analysis.yunlv import *
+from ReadingAssistant.preRender import *
 
 # Create your views here.
 
@@ -77,8 +78,9 @@ def entity_modal(request):
                     renderDict['author_birth'] = record.author_birth
                     renderDict['author_death'] = record.author_death
                 if len(record.author_desc) != 0:
-                    renderDict['author_desc'] = '<p>' + addHref2Text(record.author_desc).replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
-                        .replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
+                    #renderDict['author_desc'] = '<p>' + addHref2Text(record.author_desc).replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
+                        #.replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
+                    renderDict['author_desc'] = record.author_desc_after_render
         elif type == 'poem':
             try:
                 record = Poem.objects.get(poem_id=entId)
@@ -90,8 +92,9 @@ def entity_modal(request):
                 renderDict['entity_type'] = 'poem'
                 # TODO: make href to entities on poem
 
-                renderDict['poem_content'] = '<p>' + addHref2Text(record.poem_content).replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
-                    .replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
+                #renderDict['poem_content'] = '<p>' + addHref2Text(record.poem_content).replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
+                    #.replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
+                renderDict['poem_content'] = record.poem_content_after_render
                 if len(record.poem_year) != 0:
                     renderDict['poem_year'] = record.poem_year
                 if len(record.poem_kind) != 0:
@@ -99,11 +102,11 @@ def entity_modal(request):
                 if len(record.poem_pinyin) != 0:
                     renderDict['poem_pinyin'] = record.poem_pinyin
                 if len(record.poem_analysis) != 0:
-                    renderDict['poem_analysis'] = '<p>' + addHref2Text(record.poem_analysis).replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
-                        .replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
+                    #renderDict['poem_analysis'] = '<p>' + addHref2Text(record.poem_analysis).replace('\\n\\r', '</p><p>').replace('\\r\\n', '</p><p>')\
+                        #.replace('\\n', '</p><p>').replace('\\r', '</p><p>') + '</p>'
+                    renderDict['poem_analysis'] = record.poem_analysis_after_render
                 if len(record.poem_music) != 0:
-                    tokens = record.poem_music.split(r'\\')
-                    renderDict['poem_audio'] = '/' + tokens[1] + '/' + tokens[2] + '/' + tokens[3];
+                    renderDict['poem_audio'] = record.poem_music
         elif type == 'image':
             try:
                 record = Image.objects.get(image_id=entId)
@@ -185,3 +188,8 @@ def demo(request):
 
 def test(request):
     return render_to_response('test.html', {})
+
+def pre_render(request):
+    preRenderAuthors(1, 77)
+    preRenderPoems(1, 441)
+    return render_to_response('homepage.html')
