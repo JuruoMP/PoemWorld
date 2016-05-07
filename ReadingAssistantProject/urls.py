@@ -32,5 +32,6 @@ urlpatterns = [
     url(r'^hello/$', views.hello),
     url(r'^demo/$', views.demo),
     url(r'^test/$', views.test),
+    #url(r'^prerender/$', views.pre_render),
     url(r'^', views.homePage),
 ]

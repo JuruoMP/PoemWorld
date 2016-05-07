@@ -1,4 +1,5 @@
 import jieba.posseg
+jieba.load_userdict("imagedict.txt")
 from ReadingAssistant.models import *
 
 def getEntList_bak(text):
